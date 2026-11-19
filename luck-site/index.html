@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数字能量与周公解梦</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  :root {
+    --bg: #f4f5f7; --card: #ffffff; --text: #1f2328; --muted: #667085; --border: #e4e7ec;
+    --accent: #2f6fed; --good: #1f9d55; --good-bg: #e6f6ec; --bad: #c8323c; --bad-bg: #fdeaea;
+    --mid: #d98e04; --chip: #f2f4f7; --paper: #fbf3e2; --ink: #7a2e12; --gold: #b7791f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14161a; --card: #1e2127; --text: #e8eaed; --muted: #9aa3af; --border: #333842;
+      --accent: #6a9bff; --good: #4cc47e; --good-bg: #183324; --bad: #f06a72; --bad-bg: #3a1c1f;
+      --mid: #f0b43c; --chip: #2a2e36; --paper: #2b241a; --ink: #f0c58a; --gold: #f0b43c;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14161a; --card: #1e2127; --text: #e8eaed; --muted: #9aa3af; --border: #333842;
+    --accent: #6a9bff; --good: #4cc47e; --good-bg: #183324; --bad: #f06a72; --bad-bg: #3a1c1f;
+    --mid: #f0b43c; --chip: #2a2e36; --paper: #2b241a; --ink: #f0c58a; --gold: #f0b43c;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; line-height: 1.5; }
+  .container { max-width: 900px; margin: 0 auto; padding-block: 24px 48px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  .subtitle { color: var(--muted); margin: 0 0 20px; }
+  h2 { font-size: 18px; margin: 0 0 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  .hint { color: var(--muted); font-size: 13px; margin-top: 8px; }
+  .section-label { font-size: 13px; color: var(--muted); margin: 16px 0 6px; letter-spacing: .5px; }
+  .empty { color: var(--muted); }
+
+  .input-row { display: flex; gap: 8px; }
+  .input-row input { flex: 1; min-width: 0; font-size: 18px; padding: 12px 14px; border: 1px solid var(--border);
+    border-radius: 8px; background: var(--bg); color: var(--text); letter-spacing: 1px; }
+  input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  button { font-size: 16px; padding: 12px 20px; border: none; border-radius: 8px; background: var(--accent);
+    color: #fff; cursor: pointer; font-weight: 600; white-space: nowrap; font-family: inherit; }
+  button:hover { filter: brightness(1.08); }
+  button.secondary { background: var(--chip); color: var(--text); }
+  .seg { display: inline-flex; background: var(--chip); border-radius: 8px; padding: 3px; gap: 2px; flex-wrap: wrap; margin-top: 12px; }
+  .seg button { background: transparent; color: var(--text); padding: 6px 12px; font-size: 14px; font-weight: 500; }
+  .seg button.on { background: var(--card); box-shadow: 0 1px 3px rgba(0,0,0,.15); font-weight: 700; }
+  .rule-note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  .summary { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .score { font-size: 44px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+  .verdict { display: inline-block; padding: 6px 14px; border-radius: 999px; color: #fff; font-weight: 700; font-size: 18px; }
+  .alt-score { font-size: 13px; color: var(--muted); }
+  .bar { height: 10px; background: var(--chip); border-radius: 999px; overflow: hidden; margin: 14px 0 4px; }
+  .bar > span { display: block; height: 100%; border-radius: 999px; transition: width .4s ease; }
+  .bar-marks { font-size: 12px; color: var(--muted); position: relative; height: 16px; }
+  .bar-marks span { position: absolute; transform: translateX(-50%); }
+  .counts { color: var(--muted); margin-top: 8px; }
+
+  .energy { display: flex; height: 22px; border-radius: 6px; overflow: hidden; font-size: 12px; font-weight: 700; color: #fff; }
+  .energy span { display: flex; align-items: center; justify-content: center; min-width: 0; overflow: hidden; white-space: nowrap; transition: width .4s; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { background: var(--chip); border-radius: 6px; padding: 4px 8px; font-variant-numeric: tabular-nums; font-size: 14px; }
+  .chip b { margin-right: 4px; }
+  .seq { font-family: Consolas, "Courier New", monospace; font-size: 18px; letter-spacing: 2px; word-break: break-all; }
+  .seq .z { color: var(--muted); opacity: .55; }
+  .seq .f { color: var(--gold); font-weight: 700; }
+
+  .pair { display: flex; flex-direction: column; align-items: center; border-radius: 8px; padding: 6px 8px; min-width: 78px;
+    border: 1px solid transparent; position: relative; }
+  .pair .num { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .pair .cat { font-size: 12px; white-space: nowrap; }
+  .pair .lv { font-size: 11px; opacity: .85; white-space: nowrap; }
+  .pair .side { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 0 5px; margin-top: 2px; color: #fff; }
+  .pair .mod { position: absolute; top: -8px; right: -6px; font-size: 11px; font-weight: 800; border-radius: 999px; padding: 0 6px; color: #fff; }
+  .mod.up { background: var(--gold); } .mod.down { background: #6b7280; } .mod.mix { background: #8b5cf6; }
+  .pair.good { background: var(--good-bg); color: var(--good); border-color: var(--good); }
+  .pair.bad  { background: var(--bad-bg);  color: var(--bad);  border-color: var(--bad); }
+  .pair.good .side { background: var(--good); } .pair.bad .side { background: var(--bad); }
+  .legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); margin-top: 8px; }
+  .legend .mod { position: static; display: inline-block; margin-right: 4px; }
+
+  .tally { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 6px; }
+  .tally div { display: flex; justify-content: space-between; gap: 8px; padding: 6px 10px; border-radius: 6px; font-size: 14px; }
+  .tally .good { background: var(--good-bg); color: var(--good); }
+  .tally .bad  { background: var(--bad-bg);  color: var(--bad); }
+
+  .slip { background: var(--paper); color: var(--ink); border: 2px solid var(--ink); border-radius: 10px; padding: 20px;
+    font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", -apple-system, sans-serif; }
+  .slip-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+  .slip-level { font-size: 26px; font-weight: 800; letter-spacing: 4px; }
+  .slip-no { font-size: 14px; opacity: .8; }
+  .poem { font-size: 20px; line-height: 1.9; letter-spacing: 2px; margin: 0 0 14px; text-align: center; }
+  .jie { font-size: 16px; line-height: 1.8; }
+  .jie h3 { font-size: 17px; margin: 16px 0 4px; letter-spacing: 2px; border-bottom: 1px dashed currentColor; padding-bottom: 2px; }
+  .jie p { margin: 4px 0; }
+  .tag { display: inline-block; font-weight: 700; padding: 0 6px; border-radius: 4px; margin-right: 4px; color: #fff;
+    font-family: -apple-system, "Microsoft YaHei", sans-serif; font-size: 13px; }
+  .tag.good { background: var(--good); } .tag.bad { background: var(--bad); } .tag.neu { background: #6b7280; }
+  .disclaimer { font-size: 12px; opacity: .7; margin-top: 14px; text-align: right; }
+
+  .sugg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+  .sugg { text-align: left; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px; font-weight: 400; display: flex; flex-direction: column; gap: 4px; }
+  .sugg:hover { border-color: var(--accent); filter: none; }
+  .sugg .name { font-size: 18px; font-weight: 700; letter-spacing: 1px; word-break: break-all; }
+  .sugg .name mark { background: var(--accent); color: #fff; border-radius: 3px; padding: 0 2px; }
+  .sugg .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .sugg .how { font-size: 12px; color: var(--muted); }
+  .pct { font-weight: 800; color: #fff; border-radius: 999px; padding: 1px 10px; font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .sugg .up { font-size: 12px; color: var(--good); font-weight: 700; }
+  .sugg-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .sugg-tabs button { padding: 6px 12px; font-size: 14px; background: var(--chip); color: var(--text); }
+  .sugg-tabs button.on { background: var(--accent); color: #fff; }
+
+  textarea { width: 100%; min-height: 96px; font-size: 16px; padding: 10px 12px; border: 1px solid var(--border);
+    border-radius: 8px; background: var(--bg); color: var(--text); font-family: inherit; resize: vertical; }
+  .cmp-table td, .cmp-table th { text-align: left; padding: 8px 10px; }
+  .cmp-table tr.row { cursor: pointer; } .cmp-table tr.row:hover td { background: var(--chip); }
+  .rank { font-weight: 800; color: var(--muted); width: 36px; }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; text-align: center; font-variant-numeric: tabular-nums; }
+  th, td { border: 1px solid var(--border); padding: 7px 4px; }
+  th { background: var(--chip); font-size: 13px; }
+  .letter-table td.letter { background: #111; color: #fff; font-weight: 700; }
+  .meaning-table td.cat { color: #fff; font-weight: 700; white-space: nowrap; }
+  .meaning-table td.cat.good { background: var(--good); } .meaning-table td.cat.bad { background: var(--bad); }
+  .meaning-table td.cat small { display: block; font-weight: 400; font-size: 11px; opacity: .9; }
+  .star-table td { font-size: 13px; } .star-table td:first-child { font-weight: 700; white-space: nowrap; }
+  .star-table td.kw { text-align: left; }
+  td.hit { background: var(--accent) !important; color: #fff; font-weight: 700; }
+  td.hit sup { font-size: 10px; margin-left: 1px; }
+  /* Tabs & dream */
+  .tabs { display: flex; gap: 6px; margin: 12px 0 8px; flex-wrap: wrap; }
+  .tabs button { background: var(--chip); color: var(--text); padding: 10px 18px; }
+  .tabs button.on { background: var(--accent); color: #fff; }
+  .mood { display: flex; flex-wrap: wrap; gap: 6px; }
+  .mood button { background: var(--chip); color: var(--text); padding: 6px 12px; font-size: 14px; font-weight: 500; }
+  .mood button.on { background: var(--accent); color: #fff; }
+  .dream-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  #micBtn.rec { background: var(--bad); color: #fff; animation: pulse 1.2s infinite; }
+  @keyframes pulse { 50% { opacity: .6; } }
+  .zhou { font-size: 19px; letter-spacing: 2px; margin: 4px 0; }
+  .zhou.hit { font-weight: 800; }
+  .zhou.dim { opacity: .6; font-size: 16px; }
+  .zhou small { font-size: 12px; opacity: .7; letter-spacing: 0; margin-left: 6px; }
+  .dtag { display: inline-block; background: var(--ink); color: var(--paper); border-radius: 4px; padding: 0 8px; margin: 2px 4px 2px 0;
+    font-family: -apple-system, "Microsoft YaHei", sans-serif; font-size: 13px; font-weight: 700; }
+  .diary-item { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+  .diary-item:last-child { border-bottom: none; }
+  .diary-item .d { color: var(--muted); font-size: 12px; white-space: nowrap; min-width: 84px; }
+  .diary-item .t { flex: 1; font-size: 14px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .diary-item .x { background: none; color: var(--muted); padding: 0 6px; font-size: 16px; }
+  .account { padding-bottom: 12px; margin-bottom: 4px; border-bottom: 1px solid var(--border); }
+  #acctIn { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  #acctIn[hidden] { display: none; }
+  #acctName { font-weight: 600; margin-right: auto; word-break: break-all; }
+  button.small { padding: 6px 12px; font-size: 14px; }
+  .idx-chip { cursor: pointer; }
+  .idx-chip:hover { background: var(--accent); color: #fff; }
+  details summary { cursor: pointer; font-weight: 700; font-size: 18px; }
+  .jie details summary.more { font-size: 14px; font-weight: 600; margin: 6px 0; opacity: .85; }
+  details[open] summary { margin-bottom: 12px; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h1>数字能量 · 周公解梦</h1>
+  <div class="tabs" id="mainTabs">
+    <button data-view="numView" class="on">🔢 数字能量</button>
+    <button data-view="dreamView">🌙 周公解梦</button>
+  </div>
+
+  <div id="numView">
+  <p class="subtitle">八星磁场 · 能量等级 · 0/5 隐显 · 星曜组合 · 解签 · 改名换号 · 多名对比</p>
+
+  <div class="card">
+    <label for="nameInput" class="section-label" style="display:block;margin-top:0">输入英文名或号码 · Enter Name or Numbers</label>
+    <div class="input-row">
+      <input type="text" id="nameInput" placeholder="e.g. John Smith / 13800138000" autocomplete="off" autofocus>
+      <button id="calcBtn">Calculate</button>
+      <button id="clearBtn" class="secondary" title="Clear">✕</button>
+    </div>
+    <div class="seg" id="ruleSeg">
+      <button data-rule="orig">原版评分</button>
+      <button data-rule="trad">传统八星评分</button>
+    </div>
+    <div class="rule-note" id="ruleNote"></div>
+  </div>
+
+  <div id="resultArea" hidden>
+    <div class="card">
+      <div class="summary">
+        <div class="score" id="score"></div>
+        <div>
+          <div class="verdict" id="verdict"></div>
+          <div class="alt-score" id="altScore"></div>
+        </div>
+      </div>
+      <div class="bar"><span id="barFill"></span></div>
+      <div class="bar-marks"><span style="left:0;transform:none">0%</span><span style="left:50%">50%</span><span style="left:71%">71%</span><span style="left:100%;transform:translateX(-100%)">100%</span></div>
+      <div class="counts" id="counts"></div>
+
+      <div class="section-label">能量对比（按等级加权，参考用）</div>
+      <div class="energy" id="energy"></div>
+
+      <div class="section-label">字母转换 · Original Sequence</div>
+      <div class="chips" id="origSeq"></div>
+
+      <div class="section-label">完整数字串（灰色 0 = 隐藏 / 金色 5 = 显现，计算时去除）</div>
+      <div class="seq" id="fullSeq"></div>
+
+      <div class="section-label">数字组合 · Pairs</div>
+      <div class="chips" id="pairs" style="padding-top:8px"></div>
+      <div class="legend">
+        <span><span class="mod up">显</span>中间夹 5：能量加强、外显</span>
+        <span><span class="mod down">隐</span>中间夹 0：能量减弱、隐藏</span>
+        <span><span class="mod mix">隐显</span>0 与 5 都有</span>
+        <span>一级 100% · 二级 75% · 三级 50% · 四级 25%</span>
+      </div>
+
+      <div class="section-label">分类统计 · Tally</div>
+      <div class="tally" id="tally"></div>
+    </div>
+
+    <div class="card">
+      <h2>解签 · Reading</h2>
+      <div class="slip" id="slip"></div>
+    </div>
+
+    <div class="card">
+      <h2>改名 / 换号建议 · Suggestions</h2>
+      <div class="sugg-tabs" id="suggTabs"></div>
+      <div class="sugg-grid" id="sugg"></div>
+      <div class="hint">按当前评分方式排序；点击任一建议即可直接计算。只改动一个字母或数字。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>多名对比 · Compare</h2>
+    <textarea id="cmpInput" placeholder="每行一个名字或号码，例如：&#10;John Smith&#10;Jon Smith&#10;13800138000"></textarea>
+    <div style="margin-top:8px"><button id="cmpBtn">对比</button></div>
+    <div class="table-wrap" style="margin-top:12px"><table class="cmp-table" id="cmpTable"></table></div>
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>八星对照表（能量等级 · 五行 · 特性）</summary>
+      <div class="table-wrap"><table class="star-table" id="starTable"></table></div>
+      <div class="hint">各流派说法不一；此表综合常见说法整理，仅供参考。</div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>Pair Meanings <span class="hint" id="hitHint" style="font-weight:400"></span></h2>
+    <div class="table-wrap"><table class="meaning-table" id="pairMeaningTable"></table></div>
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>Letter to Number Table</summary>
+      <div class="table-wrap"><table class="letter-table" id="letterNumberTable"></table></div>
+    </details>
+  </div>
+  </div><!-- /numView -->
+
+  <div id="dreamView" hidden>
+    <p class="subtitle">写下或说出今天的梦，结合《周公解梦》原文与现代心理角度解读</p>
+    <div class="card">
+      <label class="section-label" for="dreamInput" style="display:block;margin-top:0">今天梦到了什么？</label>
+      <textarea id="dreamInput" placeholder="例如：梦见自己在河边走，突然有条蛇追我，我很害怕，后来牙齿还掉了……"></textarea>
+      <div class="section-label">醒来时的心情（可不选）</div>
+      <div class="mood" id="moodRow"></div>
+      <div class="dream-actions">
+        <button id="micBtn" class="secondary">🎤 语音输入</button>
+        <button id="dreamBtn">解梦</button>
+        <button id="dreamSave" class="secondary">💾 存入梦境日记</button>
+        <button id="dreamClear" class="secondary">清空</button>
+      </div>
+      <div class="hint" id="micHint">写得越具体越好：人物、动物、地点、动作、感受。</div>
+    </div>
+
+    <div class="card" id="dreamResultCard" hidden>
+      <h2>解梦 · Reading</h2>
+      <div class="slip" id="dreamSlip"></div>
+    </div>
+
+    <div class="card">
+      <h2>梦境日记</h2>
+      <div class="account" id="account">
+        <div id="acctOut">
+          <div class="hint" style="margin-top:0">用邮箱登录后，日记会同步到手机和电脑（只有你自己看得到）。不登录也能用，日记只存在这台设备。</div>
+          <div class="input-row" style="margin-top:8px">
+            <input type="email" id="emailInput" placeholder="你的邮箱" autocomplete="email">
+            <button id="loginBtn">发送登录链接</button>
+          </div>
+        </div>
+        <div id="acctIn" hidden>
+          <span id="acctName"></span>
+          <button id="logoutBtn" class="secondary small">退出登录</button>
+          <button id="uploadLocalBtn" class="small" hidden></button>
+        </div>
+        <div class="hint" id="acctMsg"></div>
+      </div>
+      <div id="diary"></div>
+    </div>
+
+    <div class="card">
+      <details>
+        <summary>可识别的梦境（点击试试）</summary>
+        <div class="chips" id="dreamIndex"></div>
+      </details>
+    </div>
+  </div><!-- /dreamView -->
+</div>
+
+<script>
+// =====================================================================
+// 数据：八星磁场（常见数字能量学说法整理）
+//   label/en/zText/pText = 原版（你哥哥版本）的叫法
+//   levels = 能量等级 一级(最强) → 四级(最弱)
+//   正 = 小数字在前（如 13），偏 = 大数字在前（如 31）；伏位 11~44 为正，66~99 为偏
+// =====================================================================
+const STARS = [
+  { key: 'tianyi',  star: '天医', element: '土', label: '财富', short: '财',   en: 'Wealth',
+    origGood: true,  tradGood: true,  levels: [[13, 31], [68, 86], [49, 94], [27, 72]],
+    kw: '财富 · 婚姻 · 健康', plus: '心地善良、有福报、财运好、感情专一', minus: '心软易被骗、为钱所累、易操劳',
+    zText: '靠本事与工作赚钱，收入稳定，积少成多。', pText: '易有意外之财、投资副业之得，财路多元。' },
+  { key: 'shengqi', star: '生气', element: '木', label: '人缘', short: '人缘', en: 'Prosperity',
+    origGood: true,  tradGood: true,  levels: [[14, 41], [67, 76], [39, 93], [28, 82]],
+    kw: '贵人 · 人缘 · 转机', plus: '乐观开朗、贵人多、遇事有转机', minus: '随遇而安、不够积极、易懒散',
+    zText: '贵人相助，朋友真诚，长辈提携。', pText: '交际广、圈子多，机会常从外面来。' },
+  { key: 'yannian', star: '延年', element: '金', label: '成功', short: '成功', en: 'Success',
+    origGood: true,  tradGood: true,  levels: [[19, 91], [78, 87], [34, 43], [26, 62]],
+    kw: '能力 · 领导 · 责任', plus: '专业能力强、有担当、能成事', minus: '固执好强、压力大、事必躬亲',
+    zText: '能力强、肯担当，事业稳步上升。', pText: '敢闯敢拼，善抓机遇，常有出奇制胜之时。' },
+  { key: 'fuwei',   star: '伏位', element: '—',  label: '等待', short: '等待', en: 'Waiting',
+    origGood: false, tradGood: true,  levels: [[11, 22], [88, 99], [66, 77], [33, 44]],
+    kw: '等待 · 蓄势 · 稳定', plus: '有耐心、稳重、厚积薄发', minus: '保守犹豫、被动、易错失良机',
+    zText: '稳而慢：机会需等待，耐心方能守得云开。', pText: '易犹豫：想得多做得少，宜果断行动。' },
+  { key: 'jueming', star: '绝命', element: '金', label: '孤独', short: '孤独', en: 'Loneliness',
+    origGood: false, tradGood: false, levels: [[12, 21], [69, 96], [48, 84], [37, 73]],
+    kw: '冲动 · 拼劲 · 大起大落', plus: '敢拼敢闯、反应快、有魄力', minus: '冲动固执、易破财、人际孤立',
+    zText: '独来独往：凡事习惯一人扛，宜多与人沟通。', pText: '心思重：易钻牛角尖，财来财去难聚。' },
+  { key: 'wugui',   star: '五鬼', element: '火', label: '凶险', short: '凶险', en: 'Danger',
+    origGood: false, tradGood: false, levels: [[18, 81], [79, 97], [36, 63], [24, 42]],
+    kw: '才华 · 变化 · 意外', plus: '聪明有创意、点子多、反应快', minus: '多疑多变、不稳定、防意外与小人',
+    zText: '变动多：做事易冲动，宜三思而后行。', pText: '暗中有险：防小人与意外，钱财往来宜谨慎。' },
+  { key: 'liusha',  star: '六煞', element: '水', label: '桃花', short: '桃花', en: 'Charm',
+    origGood: true,  tradGood: false, levels: [[16, 61], [47, 74], [38, 83], [29, 92]],
+    kw: '人缘 · 桃花 · 情绪', plus: '亲和力强、审美好、异性缘佳', minus: '情绪化、优柔寡断、感情纠葛',
+    zText: '异性缘佳，感情和顺，易得良缘。', pText: '魅力外放、追求者多，须分辨真心。' },
+  { key: 'huohai',  star: '祸害', element: '土', label: '病痛', short: '病痛', en: 'Illness',
+    origGood: false, tradGood: false, levels: [[17, 71], [89, 98], [46, 64], [23, 32]],
+    kw: '口才 · 是非 · 病痛', plus: '口才好、能言善辩', minus: '口舌是非、爱计较、身体小毛病',
+    zText: '留意身体：作息饮食要规律，莫透支。', pText: '口舌是非：说话留三分，少惹无谓之争。' },
+];
+const LEVEL_NAME = ['一级', '二级', '三级', '四级'];
+const LEVEL_WEIGHT = [1, 0.75, 0.5, 0.25];
+
+const PAIR_INFO = new Map();
+STARS.forEach(s => s.levels.forEach((lv, li) => lv.forEach(p => {
+  const a = Math.floor(p / 10), b = p % 10;
+  const side = a < b ? 'z' : a > b ? 'p' : (a <= 4 ? 'z' : 'p');
+  PAIR_INFO.set(p, { s, level: li, side });
+})));
+const sideLabel = (s, side) => (side === 'z' ? '正' : '偏') + s.short;
+
+// 星曜组合（前 → 后），常见说法
+const COMBOS = {
+  'yannian>tianyi':  ['good', '延年 + 天医', '靠能力与专业赚钱，越努力越有钱。'],
+  'tianyi>yannian':  ['good', '天医 + 延年', '有财力撑事业，财可守、钱能转为地位。'],
+  'shengqi>tianyi':  ['good', '生气 + 天医', '贵人带财，机会来钱，财从人来。'],
+  'tianyi>shengqi':  ['good', '天医 + 生气', '赚钱轻松、心情好，但易知足少进取。'],
+  'shengqi>yannian': ['good', '生气 + 延年', '得贵人提携，事业步步高升。'],
+  'yannian>shengqi': ['good', '延年 + 生气', '能力受赏识，人缘与事业相辅。'],
+  'fuwei>tianyi':    ['good', '伏位 + 天医', '财需等待，厚积薄发。'],
+  'tianyi>fuwei':    ['good', '天医 + 伏位', '有财能守，积蓄稳定。'],
+  'fuwei>yannian':   ['good', '伏位 + 延年', '蓄势待发，稳扎稳打终上位。'],
+  'fuwei>shengqi':   ['good', '伏位 + 生气', '静待时机，贵人自来。'],
+  'jueming>tianyi':  ['neu',  '绝命 + 天医', '敢投资、敢拼搏，大进大出，可白手起家。'],
+  'tianyi>jueming':  ['bad',  '天医 + 绝命', '有钱易冲动花费，或投资失利。'],
+  'wugui>tianyi':    ['neu',  '五鬼 + 天医', '靠点子才华来钱，或有偏财，但财来得快去得也快。'],
+  'tianyi>wugui':    ['bad',  '天医 + 五鬼', '钱财有变数，防受骗、防被借不还。'],
+  'huohai>tianyi':   ['neu',  '祸害 + 天医', '以口为业，靠口才赚钱（销售、讲师、主持）。'],
+  'tianyi>huohai':   ['bad',  '天医 + 祸害', '钱财易惹口舌是非，防小人劫财。'],
+  'liusha>tianyi':   ['neu',  '六煞 + 天医', '因人际、感情得财，适合服务、美业、设计。'],
+  'tianyi>liusha':   ['bad',  '天医 + 六煞', '为情花钱，财随情绪起伏。'],
+  'jueming>yannian': ['neu',  '绝命 + 延年', '拼劲足、敢冲事业，但压力大。'],
+  'yannian>jueming': ['bad',  '延年 + 绝命', '工作压力大，易冲动做决定。'],
+  'yannian>liusha':  ['bad',  '延年 + 六煞', '工作辛苦、情绪易郁闷。'],
+  'jueming>wugui':   ['bad',  '绝命 + 五鬼', '凶上加凶，大起大落，防意外破财。'],
+  'wugui>jueming':   ['bad',  '五鬼 + 绝命', '凶上加凶，变动剧烈，宜求稳。'],
+  'huohai>jueming':  ['bad',  '祸害 + 绝命', '口舌冲突，防争执与官非。'],
+  'jueming>huohai':  ['bad',  '绝命 + 祸害', '冲动惹是非，言多必失。'],
+  'wugui>huohai':    ['bad',  '五鬼 + 祸害', '是非多、小人多，凡事留证据。'],
+};
+
+const letterToNumber = ch => {
+  const code = ch.toUpperCase().charCodeAt(0) - 64;
+  return code >= 1 && code <= 26 ? String(code).padStart(2, '0') : ch;
+};
+
+// ======================= 评分方式 =======================
+let RULE = 'orig';
+try { if (localStorage.getItem('luckRule') === 'trad') RULE = 'trad'; } catch (e) {}
+const isGood = (info, rule = RULE) => !!info && (rule === 'orig' ? info.s.origGood : info.s.tradGood);
+const RULE_NOTE = {
+  orig: '原版评分（你哥哥的版本）：财富、人缘、成功、桃花算吉；凶险、病痛、孤独、等待算凶。',
+  trad: '传统八星评分：天医、生气、延年、伏位为四吉星；绝命、五鬼、六煞、祸害为四凶星。',
+};
+
+function verdictOf(pct) {
+  if (pct >= 71) return { text: 'Good Name',     zh: '吉',   color: 'var(--good)' };
+  if (pct >= 50) return { text: 'Moderate Name', zh: '中等', color: 'var(--mid)' };
+  return               { text: 'Bad Name',      zh: '不佳', color: 'var(--bad)' };
+}
+
+// ======================= 核心计算 =======================
+function analyze(input, rule = RULE) {
+  const chars = [...input].filter(ch => /[A-Za-z0-9]/.test(ch));
+  const original = chars.map(ch => ({ ch: ch.toUpperCase(), num: letterToNumber(ch) }));
+  const full = original.map(o => o.num).join('');
+  const kept = [];
+  [...full].forEach((d, idx) => { if (d !== '0' && d !== '5') kept.push({ d, idx }); });
+  const sequence = kept.map(k => k.d).join('');
+
+  const pairs = [], infos = [], mods = [];
+  for (let t = 0; t < kept.length - 1; t++) {
+    const a = kept[t], b = kept[t + 1];
+    const between = full.slice(a.idx + 1, b.idx);
+    const has5 = between.includes('5'), has0 = between.includes('0');
+    const p = Number(a.d + b.d);
+    pairs.push(p);
+    infos.push(PAIR_INFO.get(p));
+    mods.push(has5 && has0 ? 'mix' : has5 ? 'up' : has0 ? 'down' : null);
+  }
+  const goodCount = infos.filter(i => isGood(i, rule)).length;
+  const pct = pairs.length ? (goodCount / pairs.length) * 100 : 0;
+
+  // 加权能量（参考）
+  let goodE = 0, badE = 0;
+  infos.forEach((i, k) => {
+    if (!i) return;
+    const f = mods[k] === 'up' ? 1.25 : mods[k] === 'down' ? 0.75 : 1;
+    const w = LEVEL_WEIGHT[i.level] * f;
+    if (isGood(i, rule)) goodE += w; else badE += w;
+  });
+
+  const tail = kept.length ? full.slice(kept[kept.length - 1].idx + 1) : '';
+  const head = kept.length ? full.slice(0, kept[0].idx) : '';
+  return { original, full, sequence, pairs, infos, mods, goodCount, pct, goodE, badE, tail, head,
+           verdict: verdictOf(pct), rule };
+}
+
+// ======================= 解签 =======================
+const SLIPS = [
+  { min: 85, level: '上上签', poem: ['数理相生福自来', '财星人缘两相随', '顺风顺水行千里', '莫负良辰展翅飞'] },
+  { min: 71, level: '上签',   poem: ['吉星多照路途宽', '偶有微云不碍天', '守正行来终有得', '春风送暖到门前'] },
+  { min: 50, level: '中签',   poem: ['吉凶参半事难全', '进退之间要细看', '扬长避短心放稳', '云开终见月团圆'] },
+  { min: 30, level: '下签',   poem: ['凶星偏多路崎岖', '凡事三思莫急趋', '若能改字调磁场', '转机或在一念余'] },
+  { min: -1, level: '下下签', poem: ['乌云压顶雨连绵', '诸事不宜且守坚', '不如换字重来过', '柳暗花明又一天'] },
+];
+function slipNumber(s) { let h = 7; for (const ch of s) h = (h * 31 + ch.charCodeAt(0)) % 9973; return (h % 100) + 1; }
+const starName = (s, rule = RULE) => rule === 'orig' ? `${s.label}（${s.star}）` : `${s.star}（${s.label}）`;
+
+function renderSlip(r, rawInput) {
+  const box = $('slip');
+  box.replaceChildren();
+  const slip = SLIPS.find(s => r.pct >= s.min);
+  const head = el('div', 'slip-head');
+  head.append(el('span', 'slip-level', slip.level),
+              el('span', 'slip-no', `第 ${slipNumber(r.sequence + rawInput.toUpperCase())} 签 · 吉数 ${r.pct.toFixed(2)}%`));
+  const poem = el('div', 'poem');
+  slip.poem.forEach((line, i) => { poem.append(line + (i % 2 ? '。' : '，')); if (i % 2) poem.append(el('br')); });
+  box.append(head, poem);
+
+  const jie = el('div', 'jie');
+  const sec = (title, ...nodes) => { jie.append(el('h3', null, title)); nodes.forEach(n => jie.append(n)); };
+  const para = (...parts) => { const p = el('p'); p.append(...parts); return p; };
+  const tag = (txt, kind) => el('span', 'tag ' + kind, txt);
+
+  if (!r.pairs.length) { sec('解曰', para('数字太少，难成磁场，请输入更完整的名字或号码。')); box.append(jie); return; }
+
+  const stats = STARS.map(s => ({ s, z: 0, p: 0, e: 0, best: 9 }));
+  r.infos.forEach((i, k) => {
+    if (!i) return;
+    const st = stats.find(x => x.s === i.s);
+    st[i.side]++; st.e += LEVEL_WEIGHT[i.level]; st.best = Math.min(st.best, i.level);
+  });
+  const present = stats.filter(x => x.z + x.p)
+    .sort((a, b) => (b.z + b.p) - (a.z + a.p) || b.e - a.e || isGood({ s: b.s }) - isGood({ s: a.s }));
+  const goods = present.filter(x => isGood({ s: x.s })), bads = present.filter(x => !isGood({ s: x.s }));
+  const badN = r.pairs.length - r.goodCount;
+
+  // 解曰
+  sec('解曰', para(`此${isPhone(rawInput) ? '号' : '名'}共成 ${r.pairs.length} 组磁场，吉 ${r.goodCount} 组、凶 ${badN} 组，吉数占 ${r.pct.toFixed(2)}%，得「${slip.level}」。`
+    + `按能量等级加权，吉能量 ${r.goodE.toFixed(2)}、凶能量 ${r.badE.toFixed(2)}，`
+    + (r.goodE >= r.badE * 2 ? '吉气压倒凶气。' : r.goodE >= r.badE ? '吉略胜于凶。' : '凶气较重，须化解。')));
+
+  // 主星
+  const top = present[0];
+  const topSide = top.z >= top.p ? 'z' : 'p';
+  sec('主星', para(tag(`${top.s.star} · ${top.s.label} ×${top.z + top.p}`, isGood({ s: top.s }) ? 'good' : 'bad'),
+    `五行属${top.s.element}，主「${top.s.kw}」。`,
+    isGood({ s: top.s }) ? `以「${sideLabel(top.s, topSide)}」为主，此乃最大助力。` : '此为最需留意之处，宜化解趋避。'),
+    para(`长处：${top.s.plus}；短处：${top.s.minus}。`));
+
+  // 正偏
+  const gz = goods.reduce((n, x) => n + x.z, 0), gp = goods.reduce((n, x) => n + x.p, 0);
+  if (gz + gp) {
+    let road;
+    if (gz > gp * 1.5)      road = `吉星以正为主（正 ${gz} · 偏 ${gp}）：宜走正门，稳扎稳打，靠本业与信誉立身。`;
+    else if (gp > gz * 1.5) road = `吉星以偏为主（正 ${gz} · 偏 ${gp}）：偏门见长，宜灵活变通，副业、投资、人脉皆可为。`;
+    else                    road = `吉星正偏兼备（正 ${gz} · 偏 ${gp}）：本业稳固之余，亦可留意外来机遇。`;
+    sec('正偏', para(road));
+  }
+
+  // 吉星
+  if (goods.length) sec('吉星', ...goods.flatMap(x => {
+    const out = [], lv = `（最强 ${LEVEL_NAME[x.best]}）`;
+    if (x.z) out.push(para(tag(`正${x.s.short} ×${x.z}`, 'good'), x.s.zText.replace(/^[^：]*：/, '') + (x.p ? '' : lv)));
+    if (x.p) out.push(para(tag(`偏${x.s.short} ×${x.p}`, 'good'), x.s.pText.replace(/^[^：]*：/, '') + lv));
+    return out;
+  }));
+  // 留意
+  if (bads.length) sec('留意', ...bads.flatMap(x => {
+    const out = [];
+    if (x.z) out.push(para(tag(`${x.s.label}（正）×${x.z}`, 'bad'), x.s.zText));
+    if (x.p) out.push(para(tag(`${x.s.label}（偏）×${x.p}`, 'bad'), x.s.pText));
+    return out;
+  }));
+
+  // 组合
+  const seen = new Set(), combos = [];
+  for (let k = 0; k < r.infos.length - 1; k++) {
+    const a = r.infos[k], b = r.infos[k + 1];
+    if (!a || !b) continue;
+    const pp = `${String(r.pairs[k]).padStart(2, '0')}→${String(r.pairs[k + 1]).padStart(2, '0')}`;
+    if (a.s === b.s) {
+      const key = 'dup:' + a.s.key;
+      if (seen.has(key)) continue; seen.add(key);
+      combos.push(para(tag(`${a.s.star}叠加`, isGood({ s: a.s }) ? 'good' : 'bad'),
+        `${pp}：同星相连，${a.s.star}之力加倍——${isGood({ s: a.s }) ? a.s.plus.split('、')[0] + '更显。' : a.s.minus.split('、')[0] + '更明显，须多注意。'}`));
+      continue;
+    }
+    const c = COMBOS[`${a.s.key}>${b.s.key}`];
+    if (!c || seen.has(c[1])) continue;
+    seen.add(c[1]);
+    combos.push(para(tag(c[1], c[0]), `${pp}：${c[2]}`));
+  }
+  if (combos.length) sec('组合', ...combos.slice(0, 6));
+
+  // 隐显
+  const ups = r.mods.filter(m => m === 'up' || m === 'mix').length, downs = r.mods.filter(m => m === 'down' || m === 'mix').length;
+  const hx = [];
+  if (ups)   hx.push(`有 ${ups} 组夹 5，磁场外显加强，好坏都摆在明处、来得快。`);
+  if (downs) hx.push(`有 ${downs} 组夹 0，磁场隐藏减弱，事情多在暗处发生、需时间显现。`);
+  if (/0/.test(r.tail)) hx.push('结尾带 0：收尾偏虚，凡事宜多留后手。');
+  else if (/5/.test(r.tail)) hx.push('结尾带 5：收尾显达，成果容易被看见。');
+  if (hx.length) sec('隐显', para(hx.join('')));
+
+  // 起收
+  const first = r.infos[0], last = r.infos[r.infos.length - 1];
+  const fmt = (p, i) => `${String(p).padStart(2, '0')}（${i ? i.s.star + '·' + sideLabel(i.s, i.side) : '未知'}）`;
+  sec('起收', para(`起于 ${fmt(r.pairs[0], first)}，收于 ${fmt(r.pairs[r.pairs.length - 1], last)}。`
+    + (isGood(last) ? '收尾得吉，后劲足，越走越顺。' : '收尾逢凶，后段宜多加经营。')));
+
+  // 号码后四位
+  if (isPhone(rawInput)) {
+    const digits = rawInput.replace(/\D/g, '');
+    const last4 = digits.slice(-4);
+    const r4 = analyze(last4);
+    const names = r4.infos.map((i, k) => `${String(r4.pairs[k]).padStart(2, '0')} ${i ? i.s.star : '—'}`).join('、') || '（去 0/5 后不足两位）';
+    sec('后四位', para(`常见说法认为号码最后四位影响最大。此号后四位为「${last4}」：${names}。`
+      + (r4.pairs.length ? (r4.pct >= 71 ? '后四位吉，收得稳。' : r4.pct >= 50 ? '后四位吉凶参半。' : '后四位偏凶，若可选号，优先调整后四位。') : '')));
+  }
+
+  // 建议
+  let advice;
+  if (r.pct >= 85)      advice = '此名磁场佳，可放心使用，不必更改。';
+  else if (r.pct >= 71) advice = '整体吉利，若想锦上添花，可参考下方建议微调一字。';
+  else if (r.pct >= 50) advice = '吉凶参半，建议参考下方改名 / 换号建议，择吉而用。';
+  else                  advice = '凶星偏多，建议参考下方建议改动一字，以转磁场。';
+  sec('建议', para(advice));
+  box.append(jie, el('div', 'disclaimer', '※ 民间数字能量学说法，流派不一，仅供娱乐参考'));
+}
+
+const isPhone = s => /^[\d\s+\-()]+$/.test(s.trim()) && s.replace(/\D/g, '').length >= 7;
+
+// ======================= 改名 / 换号建议 =======================
+const VOWELS = new Set('AEIOUY');
+const isLetter = ch => /[A-Za-z]/.test(ch);
+const isDigit = ch => /[0-9]/.test(ch);
+const matchCase = (src, ch) => (src === src.toLowerCase() ? ch.toLowerCase() : ch.toUpperCase());
+
+function generateSuggestions(input) {
+  const base = analyze(input);
+  const chars = [...input];
+  const alnumIdx = chars.map((c, i) => (/[A-Za-z0-9]/.test(c) ? i : -1)).filter(i => i >= 0);
+  const hasLetters = chars.some(isLetter);
+  const out = new Map();
+  const push = (arr, kind, rank, pos, how) => {
+    const text = arr.join(''), key = text.toUpperCase();
+    if (out.has(key) || key === input.toUpperCase()) return;
+    const r = analyze(text);
+    if (!r.pairs.length) return;
+    if (r.pct < base.pct || (r.pct === base.pct && r.goodE - r.badE <= base.goodE - base.badE)) return;
+    out.set(key, { text, kind, rank, pos, how, pct: r.pct, r });
+  };
+  const AZ = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for (const i of alnumIdx) {
+    const src = chars[i];
+    if (isLetter(src)) {
+      for (const L of AZ) {
+        if (L === src.toUpperCase()) continue;
+        const arr = chars.slice(); arr[i] = matchCase(src, L);
+        push(arr, 'sub', VOWELS.has(L) === VOWELS.has(src.toUpperCase()) ? 0 : 2, i, `${src.toUpperCase()} → ${L}`);
+      }
+    } else if (isDigit(src)) {
+      for (const D of '0123456789') {
+        if (D === src) continue;
+        const arr = chars.slice(); arr[i] = D;
+        push(arr, 'sub', i >= chars.length - 4 ? 0 : 1, i, `第 ${alnumIdx.indexOf(i) + 1} 位 ${src} → ${D}`);
+      }
+    }
+  }
+  if (hasLetters) {
+    for (const i of alnumIdx) {
+      if (!isLetter(chars[i])) continue;
+      for (const L of AZ) { const arr = chars.slice(); arr.splice(i + 1, 0, matchCase(chars[i], L)); push(arr, 'add', 1, i + 1, `加 ${L}`); }
+    }
+    if (alnumIdx.length > 2) for (const i of alnumIdx) {
+      if (!isLetter(chars[i])) continue;
+      const arr = chars.slice(); arr.splice(i, 1); push(arr, 'del', 1, i, `去掉 ${chars[i].toUpperCase()}`);
+    }
+  }
+  const net = s => s.r.goodE - s.r.badE;
+  return { base, list: [...out.values()].sort((a, b) => b.pct - a.pct || net(b) - net(a) || a.rank - b.rank || a.text.localeCompare(b.text)) };
+}
+
+let lastSugg = null, suggFilter = 'all';
+function renderSuggestions(input) {
+  lastSugg = generateSuggestions(input);
+  const hasLetters = [...input].some(isLetter);
+  const tabs = hasLetters ? [['all', '全部'], ['sub', '换一个字母'], ['add', '加一个字母'], ['del', '去一个字母']] : [['all', '换一个数字']];
+  if (!tabs.some(t => t[0] === suggFilter)) suggFilter = 'all';
+  $('suggTabs').replaceChildren(...tabs.map(([k, label]) => {
+    const b = el('button', k === suggFilter ? 'on' : null, label);
+    b.onclick = () => { suggFilter = k; renderSuggestions($('nameInput').value); };
+    return b;
+  }));
+  const { base, list } = lastSugg;
+  const items = list.filter(s => suggFilter === 'all' || s.kind === suggFilter).slice(0, 9);
+  const grid = $('sugg');
+  if (!items.length) { grid.replaceChildren(el('span', 'empty', base.pct >= 100 ? '已经是 100%，且能量已很强，无需更改 🎉' : '这一类改动找不到更好的组合，试试其他选项。')); return; }
+  grid.replaceChildren(...items.map(s => {
+    const card = el('button', 'sugg');
+    const name = el('div', 'name');
+    const arr = [...s.text];
+    if (s.kind === 'del') name.append(s.text);
+    else name.append(arr.slice(0, s.pos).join(''), el('mark', null, arr[s.pos]), arr.slice(s.pos + 1).join(''));
+    const row = el('div', 'row');
+    const pct = el('span', 'pct', s.pct.toFixed(2) + '%'); pct.style.background = s.r.verdict.color;
+    row.append(el('span', 'how', s.how), pct);
+    const diff = s.pct - base.pct;
+    card.append(name, row, el('span', 'up', diff > 0 ? `▲ +${diff.toFixed(2)}% · ${s.r.verdict.zh}` : `能量更强 · 吉 ${s.r.goodE.toFixed(2)} / 凶 ${s.r.badE.toFixed(2)}`));
+    card.onclick = () => { $('nameInput').value = s.text; calculateNumerology(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    return card;
+  }));
+}
+
+// ======================= 渲染 =======================
+const $ = id => document.getElementById(id);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+function calculateNumerology() {
+  const input = $('nameInput').value;
+  const r = analyze(input);
+  if (!r.original.length) { $('resultArea').hidden = true; highlightTable([]); return; }
+  $('resultArea').hidden = false;
+
+  const alt = analyze(input, RULE === 'orig' ? 'trad' : 'orig');
+  $('score').textContent = r.pct.toFixed(2) + '%';
+  $('score').style.color = r.verdict.color;
+  $('verdict').textContent = `${r.verdict.text} · ${r.verdict.zh}`;
+  $('verdict').style.background = r.verdict.color;
+  $('altScore').textContent = `${RULE === 'orig' ? '传统八星' : '原版'}评分：${alt.pct.toFixed(2)}%（${alt.verdict.zh}）`;
+  $('barFill').style.width = r.pct + '%';
+  $('barFill').style.background = r.verdict.color;
+  $('counts').textContent = r.pairs.length
+    ? `${r.goodCount} good / ${r.pairs.length} pairs（吉 ${r.goodCount} · 凶 ${r.pairs.length - r.goodCount}）`
+    : '数字不足，无法组成数字组合';
+
+  const tot = r.goodE + r.badE || 1;
+  const gSpan = el('span', null, r.goodE ? `吉 ${r.goodE.toFixed(2)}` : ''); gSpan.style.cssText = `width:${r.goodE / tot * 100}%;background:var(--good)`;
+  const bSpan = el('span', null, r.badE ? `凶 ${r.badE.toFixed(2)}` : '');  bSpan.style.cssText = `width:${r.badE / tot * 100}%;background:var(--bad)`;
+  $('energy').replaceChildren(gSpan, bSpan);
+
+  $('origSeq').replaceChildren(...r.original.map(o => { const c = el('span', 'chip'); if (o.ch === o.num) c.append(o.num); else c.append(el('b', null, o.ch), o.num); return c; }));
+  $('fullSeq').replaceChildren(...[...r.full].map(d => el('span', d === '0' ? 'z' : d === '5' ? 'f' : null, d)));
+
+  $('pairs').replaceChildren(...(r.pairs.length ? r.pairs.map((p, k) => {
+    const i = r.infos[k];
+    const box = el('div', 'pair ' + (isGood(i) ? 'good' : 'bad'));
+    box.append(el('span', 'num', String(p).padStart(2, '0')));
+    if (i) {
+      box.append(el('span', 'cat', RULE === 'orig' ? `${i.s.label} · ${i.s.star}` : `${i.s.star} · ${i.s.label}`),
+                 el('span', 'lv', `${LEVEL_NAME[i.level]} ${LEVEL_WEIGHT[i.level] * 100}%`),
+                 el('span', 'side', sideLabel(i.s, i.side)));
+    } else box.append(el('span', 'cat', 'Unknown'));
+    const m = r.mods[k];
+    if (m) box.append(el('span', 'mod ' + m, m === 'up' ? '显' : m === 'down' ? '隐' : '隐显'));
+    return box;
+  }) : [el('span', 'empty', '—')]));
+
+  const tally = STARS.map(s => ({ s, z: r.infos.filter(i => i?.s === s && i.side === 'z').length, p: r.infos.filter(i => i?.s === s && i.side === 'p').length }))
+                     .filter(t => t.z + t.p);
+  $('tally').replaceChildren(...tally.map(({ s, z, p }) => {
+    const d = el('div', isGood({ s }) ? 'good' : 'bad');
+    d.append(el('span', null, starName(s)), el('b', null, `正 ${z} · 偏 ${p}`));
+    return d;
+  }));
+
+  renderSlip(r, input);
+  renderSuggestions(input);
+  highlightTable(r.pairs);
+}
+
+function buildTables() {
+  const t1 = $('letterNumberTable');
+  for (let start = 0; start < 26; start += 7) {
+    const tr1 = el('tr'), tr2 = el('tr');
+    for (let i = start; i < Math.min(start + 7, 26); i++) {
+      const L = String.fromCharCode(65 + i);
+      tr1.append(el('td', 'letter', L)); tr2.append(el('td', null, letterToNumber(L)));
+    }
+    t1.append(tr1, tr2);
+  }
+  const th = (txt, span = 1) => { const h = el('th', null, txt); h.colSpan = span; return h; };
+
+  const t2 = $('pairMeaningTable');
+  const head = el('tr'); head.append(th('正（正门 / 正财）', 4), th('含义'), th('偏（偏门 / 偏财）', 4)); t2.append(head);
+  ['tianyi', 'shengqi', 'yannian', 'wugui', 'liusha', 'huohai', 'jueming', 'fuwei'].forEach(k => {
+    const s = STARS.find(x => x.key === k);
+    const all = s.levels.flat();
+    const z = all.filter(p => PAIR_INFO.get(p).side === 'z').sort((a, b) => a - b);
+    const p = all.filter(q => PAIR_INFO.get(q).side === 'p').sort((a, b) => a - b);
+    const tr = el('tr');
+    const cell = n => { const td = el('td', null, String(n)); td.dataset.pair = n; return td; };
+    const catTd = el('td', 'cat');
+    catTd.dataset.star = k;
+    tr.append(...z.map(cell), catTd, ...p.map(cell));
+    t2.append(tr);
+  });
+
+  const t3 = $('starTable');
+  const h3 = el('tr'); h3.append(th('星'), th('五行'), th('一级'), th('二级'), th('三级'), th('四级'), th('关键词'), th('长处 / 短处')); t3.append(h3);
+  STARS.forEach(s => {
+    const tr = el('tr');
+    const name = el('td', null, `${s.star}`); name.dataset.star = s.key;
+    tr.append(name, el('td', null, s.element), ...s.levels.map(l => el('td', null, l.join(' / '))),
+              el('td', 'kw', s.kw), el('td', 'kw', `✔ ${s.plus}\n✘ ${s.minus}`));
+    tr.lastChild.style.whiteSpace = 'pre-line';
+    t3.append(tr);
+  });
+  refreshRuleColors();
+}
+
+function refreshRuleColors() {
+  document.querySelectorAll('#pairMeaningTable td.cat').forEach(td => {
+    const s = STARS.find(x => x.key === td.dataset.star);
+    td.className = 'cat ' + (isGood({ s }) ? 'good' : 'bad');
+    td.replaceChildren(RULE === 'orig' ? s.label : s.star, el('small', null, RULE === 'orig' ? `${s.star} · ${s.en}` : `${s.label} · ${s.en}`));
+  });
+  document.querySelectorAll('#starTable td[data-star]').forEach(td => {
+    const s = STARS.find(x => x.key === td.dataset.star);
+    td.style.color = isGood({ s }) ? 'var(--good)' : 'var(--bad)';
+    td.textContent = `${s.star}（${s.label}）`;
+  });
+  document.querySelectorAll('#ruleSeg button').forEach(b => b.classList.toggle('on', b.dataset.rule === RULE));
+  $('ruleNote').textContent = RULE_NOTE[RULE];
+}
+
+function highlightTable(pairs) {
+  const counts = {};
+  pairs.forEach(p => counts[p] = (counts[p] || 0) + 1);
+  document.querySelectorAll('#pairMeaningTable td[data-pair]').forEach(td => {
+    const n = counts[td.dataset.pair];
+    td.classList.toggle('hit', !!n);
+    td.textContent = td.dataset.pair;
+    if (n > 1) td.append(el('sup', null, '×' + n));
+  });
+  $('hitHint').textContent = pairs.length ? '— 蓝色为本次出现的组合' : '';
+}
+
+// ======================= 多名对比 =======================
+function runCompare() {
+  const names = $('cmpInput').value.split(/[\n,，;；]+/).map(s => s.trim()).filter(Boolean);
+  const t = $('cmpTable');
+  if (!names.length) { t.replaceChildren(); return; }
+  const rows = names.map(n => {
+    const a = analyze(n, 'orig'), b = analyze(n, 'trad'), cur = RULE === 'orig' ? a : b;
+    return { n, a, b, cur, slip: SLIPS.find(s => cur.pct >= s.min).level };
+  }).sort((x, y) => y.cur.pct - x.cur.pct || (y.cur.goodE - y.cur.badE) - (x.cur.goodE - x.cur.badE));
+  const head = el('tr');
+  ['#', '名字 / 号码', '原版', '传统八星', '签', '主星'].forEach(h => head.append(el('th', null, h)));
+  t.replaceChildren(head, ...rows.map((r, i) => {
+    const tr = el('tr', 'row');
+    const pctTd = x => { const td = el('td'); const s = el('span', 'pct', x.pct.toFixed(2) + '%'); s.style.background = x.verdict.color; td.append(s); return td; };
+    const cnt = {}; r.cur.infos.forEach(f => { if (f) cnt[f.s.star] = (cnt[f.s.star] || 0) + 1; });
+    const topStar = Object.entries(cnt).sort((a, b) => b[1] - a[1])[0];
+    tr.append(el('td', 'rank', String(i + 1)), el('td', null, r.n), pctTd(r.a), pctTd(r.b), el('td', null, r.slip),
+              el('td', null, topStar ? `${topStar[0]} ×${topStar[1]}` : '—'));
+    tr.onclick = () => { $('nameInput').value = r.n; calculateNumerology(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    return tr;
+  }));
+}
+
+// ======================= 事件 =======================
+let timer;
+buildTables();
+$('calcBtn').addEventListener('click', calculateNumerology);
+$('nameInput').addEventListener('keydown', e => { if (e.key === 'Enter') calculateNumerology(); });
+$('nameInput').addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(calculateNumerology, 150); });
+$('clearBtn').addEventListener('click', () => { $('nameInput').value = ''; calculateNumerology(); $('nameInput').focus(); });
+$('cmpBtn').addEventListener('click', runCompare);
+$('ruleSeg').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  RULE = b.dataset.rule;
+  try { localStorage.setItem('luckRule', RULE); } catch (err) {}
+  refreshRuleColors(); calculateNumerology(); if ($('cmpTable').rows.length) runCompare();
+});
+
+// =====================================================================
+// 周公解梦
+//   lines: [原文, 吉1/凶0/null, 触发词] —— 原文出自《周公解梦》（维基文库本），已转简体
+//   梦里出现「触发词」时，该句判为"应验"并加粗
+// =====================================================================
+// 原文格式：'原文@触发词,触发词'；吉凶由原文末尾判词自动判断
+const DREAMS = [
+  { name: '蛇', keys: ['蛇', '蟒'], ch: '龙蛇禽兽等类', tone: 0,
+    lines: ['蛇咬人主得大财@咬', '蛇入怀中生贵子@怀,抱', '蛇绕身者生贵子@缠,绕', '蛇化龙得贵人助@化龙,变成龙', '龙蛇入门主得财@门,家里',
+            '蛇行水内主荣迁@水,河,游', '蛇随人去妻外心@跟,随', '蛇入谷道主口舌@钻,洞', '蛇多者主阴司事@很多,好多,一群',
+            '蛇赤黑口舌青吉@红,黑,青,绿', '蛇黄白主有官事@黄蛇', '龙蛇杀人主大凶@杀'],
+    why: '蛇常代表让你不安、却又说不清的事——一个人、一段关系或一件悬而未决的事。蛇会蜕皮，所以也象征你正处在转变期。',
+    mean: '被蛇追或咬：有压力正在逼近；与蛇平和相处：你正在接纳变化。',
+    care: '留意身边"表面友善"的人和事，重要决定多核实一次。',
+    scenes: [['咬', '被蛇咬', '古说「蛇咬人主得大财」，近期或有意外之财；心理上是被一件突如其来的事"刺"到，提醒你正视它。'],
+             ['追', '被蛇追', '你在逃避一个让你不安的问题或人，越逃越大，不如回头面对。'],
+             ['缠,绕', '蛇缠身', '被某种关系或责任困住，也可能是一份很强烈的感情牵绊。古说反主生贵子。'],
+             ['打死,杀死,杀蛇', '打死蛇', '你有能力战胜困难、化解小人。'],
+             ['很多,好多,一群', '很多蛇', '压力来源多，心事杂，需要一件件理清。'],
+             ['白蛇', '白蛇', '多被视为贵人与好运，也代表灵性与直觉。'],
+             ['黑蛇', '黑蛇', '隐藏的恐惧，或暗处的阻碍。']],
+    life: ['有变动或晋升机会，但要防同事暗中较劲。', '古说蛇咬得财，近期或有意外收入。', '留意感情中的猜疑与不安全感。', '压力大时容易失眠，注意放松。'] },
+
+  { name: '龙', keys: ['龙'], ch: '龙蛇禽兽等类', tone: 1,
+    lines: ['龙飞有官位大贵@飞,天上', '乘龙入水有贵位@骑,乘', '龙眠水中求事遂@睡,眠', '龙当门者大吉昌@门', '乘龙上山所求遂@山',
+            '乘龙入市主贵位@市,街', '龙蛇入灶有官至@灶,厨房', '妇人见龙生贵子@怀孕,孕', '龙死亡主失贵位@死', '龙入井中官被辱@井'],
+    why: '龙象征抱负、力量与好运。梦到龙，多半是心里有想达成的大目标。',
+    mean: '事业心强，近期有贵人运、升迁运。',
+    care: '目标远大是好事，记得落到每天的行动上。',
+    scenes: [['飞', '龙在天上飞', '事业上升、志向远大。'], ['骑,乘', '骑龙', '你能驾驭机会，有贵人相助。'],
+             ['死', '龙死了', '担心失去地位或机会，宜稳守。'], ['金', '金龙', '财运与名望并至。']],
+    life: ['升迁、贵人运强。', '正财稳步增加。', '自信有魅力，异性缘好。', '精力充沛，但别逞强熬夜。'] },
+
+  { name: '祥鸟（凤凰 / 孔雀 / 鹤 / 燕）', keys: ['凤凰', '凤', '孔雀', '鹤', '鸳鸯', '燕子', '喜鹊'], ch: '龙蛇禽兽等类', tone: 1,
+    lines: ['凤凰主有贵人助@凤', '孔雀者主大吉利@孔雀', '孔雀飞舞有文章@开屏,飞舞', '鹤鸣者禄位大显@叫,鸣', '鹤入怀中生贵子@怀',
+            '放鹤者主得财吉@放', '鹤上天主小口灾@鹤飞', '燕飞入怀妻贵子@燕', '燕子至有远客来@燕子', '鸳鸯散去主妻凶@鸳鸯'],
+    why: '吉祥的鸟代表好消息、名声和贵人。',
+    mean: '近期有被看见、被欣赏的机会。',
+    care: '机会来时大方展现自己。',
+    scenes: [['孔雀', '孔雀开屏', '名声、展现才华的机会。'], ['鹤', '仙鹤', '长寿、清高、有贵人。'],
+             ['燕子', '燕子', '远方的人或消息即将到来。'], ['喜鹊', '喜鹊', '民间说「喜鹊报喜」，有好消息。'], ['鸳鸯', '鸳鸯', '你在意感情的状态。']],
+    life: ['有展示才华的舞台。', '平稳向好。', '桃花与好消息。', '心情舒畅。'] },
+
+  { name: '鸟 / 鸡鸭', keys: ['鸟', '鸽', '乌鸦', '麻雀', '鸡', '鹅', '鸭'], not: ['鸡蛋糕'], ch: '龙蛇禽兽等类', tone: 1,
+    lines: ['飞鸟入怀皆主吉@怀', '捉住飞鸟远信至@抓,捉', '鸦雀相噪主酒食@乌鸦,麻雀,叫', '雀鼠争斗有官事@斗,打',
+            '鹅鸭同游添好妾@鹅,鸭', '鸡抱卵主有大喜@蛋,孵', '鸡在树上主得财@树', '杀鸡鹅鸭主大吉@杀', '空中鸟鸣主妻亡@空中'],
+    why: '鸟代表自由与消息；鸡鸭等家禽代表家庭与日常的收获。',
+    mean: '可能有消息传来，或日常生活有小收获。',
+    care: '留意身边的新机会。',
+    scenes: [['抓,捉', '抓到鸟', '抓住机会或得到消息。'], ['飞走', '鸟飞走了', '担心错过机会。'], ['乌鸦', '乌鸦', '民间多视为不祥，但古书说「鸦雀相噪主酒食」，反有吃喝聚会。']] },
+
+  { name: '老虎 / 狮 / 狼', keys: ['虎', '狮', '豹', '狼', '熊'], ch: '龙蛇禽兽等类', tone: 1,
+    lines: ['猛虎大吼主得官@吼,叫', '骑虎行者无恶事@骑', '虎入宅中官职重@家,屋,进', '虎狼不动见官吉@不动,趴', '杀虎豹主得重印@杀,打死',
+            '狮子叫吼声名震@狮', '熊罴主身生贵子@熊', '豹狼恶狗有盗贼@狼,豹', '狼啖脚者主不得@咬'],
+    why: '猛兽代表权威与力量，也可能是让你有压力的上司或长辈。',
+    mean: '事业上有掌权机会，或要面对强势的人。',
+    care: '保持自信，但别硬碰硬。',
+    scenes: [['追', '被猛兽追', '面对强势的人或事，感到害怕想逃。'], ['咬', '被咬', '担心冲突或损失。'],
+             ['骑', '骑老虎', '你在驾驭一件有风险的事——小心骑虎难下。'], ['打死,杀', '打死猛兽', '战胜强敌、地位提升。']],
+    life: ['有掌权机会，也会遇到强者。', '敢闯可得，但别冒进。', '关系中有强势的一方。', '注意肝火与脾气。'] },
+
+  { name: '猫', keys: ['猫'], ch: '龙蛇禽兽等类', tone: 0,
+    lines: ['猫捕鼠者大得财@鼠,老鼠'],
+    why: '猫代表独立、直觉与神秘。', mean: '相信自己的直觉。', care: '人际上多留个心眼。',
+    scenes: [['抓我,抓伤,咬', '被猫抓 / 咬', '有人表面亲近、暗藏心思。'], ['黑猫', '黑猫', '直觉在提醒你留意小事。'],
+             ['小猫,猫咪', '小猫', '想被照顾，或想照顾别人。'], ['鼠', '猫抓老鼠', '古说大得财。']],
+    life: ['靠直觉判断有利。', '古说猫捕鼠得财。', '独立与亲密之间的拉扯。', '多休息。'] },
+
+  { name: '狗', keys: ['狗', '犬'], ch: '龙蛇禽兽等类', tone: 0,
+    lines: ['犬吠主人失财凶@叫,吠', '豹狼恶狗有盗贼@咬,恶,凶'],
+    why: '狗代表忠诚与友情。', mean: '近期的人际关系值得留意。', care: '财物保管好，门窗锁好。',
+    scenes: [['咬', '被狗咬', '信任的人让你失望，或担心被背叛。'], ['追', '被狗追', '有人或事在催你。'],
+             ['摇尾,可爱,小狗,友善', '友善的狗', '身边有可靠的朋友。'], ['死', '狗死了', '担心失去一段友情。']],
+    life: ['同事关系需要经营。', '古说犬吠失财，注意财物。', '忠诚与信任是关键。', '外出注意安全。'] },
+
+  { name: '老鼠', keys: ['老鼠', '鼠'], ch: '龙蛇禽兽等类', tone: 0,
+    lines: ['鼠大走主有喜事@跑,走', '白鼠引路人提携@白', '鼠咬人衣所求得@咬', '雀鼠争斗有官事@打,斗'],
+    why: '老鼠代表琐碎的烦恼，或背后的小动作。', mean: '小事累积成压力。', care: '防小人，也别为小事计较。',
+    scenes: [['很多,一群', '很多老鼠', '小烦恼不断，有人在背后议论。'], ['咬', '被老鼠咬', '古说「所求得」，所求之事反而能成。']] },
+
+  { name: '走兽家畜（兔 / 鹿 / 马 / 牛 / 羊 / 猪 / 猴）', keys: ['兔', '鹿', '马', '牛', '羊', '猪', '猴'], not: ['马上', '牛奶', '马路'], ch: '龙蛇禽兽等类 · 牛马猪羊六畜', tone: 1,
+    lines: ['活兔在园百忧去@兔', '群兔上天得贵位@兔', '獐鹿在家得官禄@鹿', '行车白马主大吉@马', '杀牛鹿者大富贵@杀牛',
+            '杀牛食肉主生财@牛肉', '杀猪豕者大吉利@猪', '杀羊打羊主病凶@羊', '山猴主有争讼端@猴', '白猴主有禄位得@白猴'],
+    why: '温顺的动物代表生活中的助力与收获；猴子代表聪明，也可能是爱耍小聪明的人。',
+    mean: '多主收获与平安。', care: '踏实做事，收获自然来。' },
+
+  { name: '鱼', keys: ['鱼'], ch: '龟鳖鱼虾昆虫', tone: 1,
+    lines: ['群鱼游水主有财@游,很多', '鲤鱼妻有孕大吉@鲤', '井中有鱼身主贵@井', '鱼飞水上百事散@飞,跳'],
+    why: '鱼象征机会、财富与灵感（年年有「余」）；民间也常和怀孕联系在一起。',
+    mean: '近期可能有进财或好消息。', care: '机会来时要抓住，别犹豫太久。',
+    scenes: [['抓,钓,捞', '抓鱼 / 钓鱼', '抓住机会、有收获。'], ['死鱼,死', '死鱼', '机会流失或期望落空。'],
+             ['大鱼', '大鱼', '大机会、大财。'], ['金鱼', '金鱼', '好运与美好生活。']],
+    life: ['机会到来。', '年年有余，财运好。', '古说与怀孕喜事有关。', '平稳。'] },
+
+  { name: '水 / 河 / 海', keys: ['水', '河', '江', '海', '湖', '游泳'], not: ['水果', '口水', '泪水', '水杯', '海报', '汗水'], ch: '水火盗贼灯烛', tone: 0,
+    lines: ['大水澄清大吉利@清,干净', '江海涨漫大吉昌@涨,洪水,大水', '自在水中大吉利@游泳,在水里', '水上行者主大吉@水上走,水面', '饮水不休得大财@喝',
+            '渡天河主有所吉@渡,过河', '水流洋洋有新婚@流', '河水沙石益文章@沙,石', '水上立者主凶事@站', '自跌水中不出凶@掉进,跌,淹',
+            '流水绕身有狱讼@绕', '人家有水儿子亡@家里有水,家里进水'],
+    why: '水在梦里最常代表情绪。清澈平静＝心情稳定；浑浊、汹涌＝情绪积压，快装不下了。',
+    mean: '能在水上行走、顺利过河：你有能力驾驭眼前局面。',
+    care: '情绪要有出口，别全部自己吞下；近期也注意水边安全。',
+    scenes: [['清,干净,清澈', '清水', '心情澄明，古说大吉。'], ['浑,脏,黑水', '浑水', '情绪混乱、事情不明朗。'],
+             ['淹,溺', '溺水', '被压力淹没，需要找人帮忙。'], ['洪水,涨', '洪水', '事情来势汹汹；但古书说「江海涨漫大吉昌」，危中有机。'],
+             ['游泳', '游泳', '你在顺势而为、适应环境。'], ['过河,渡', '过河', '正在跨越一个人生阶段。']],
+    life: ['顺势而为，水到渠成。', '水主财，清水大吉。', '情绪起伏需要沟通。', '多喝水，注意肾与泌尿。'] },
+
+  { name: '雨', keys: ['雨'], ch: '天地日月星辰', tone: 0,
+    lines: ['行路逢雨有酒食@走,路', '天晴雨散百忧去@停,晴', '阴雨晦暗主凶事@阴,暗', '狂风大雨人死亡@暴雨,狂风'],
+    why: '雨象征洗刷与释放。小雨像压力被慢慢冲淡；暴雨则多半是心情低落。',
+    mean: '一段疲惫期即将过去，或你正需要好好发泄一下。', care: '给自己留点休息时间。',
+    scenes: [['淋', '淋雨', '压力正在被冲刷，也可能觉得委屈。'], ['停,晴', '雨停天晴', '烦恼即将过去。']] },
+
+  { name: '雪 / 霜', keys: ['雪', '霜'], not: ['雪糕'], ch: '天地日月星辰', tone: 0,
+    lines: ['雪下及时大吉利', '雪落身上万事成@身上', '雪不沾身主孝服@不沾', '雪落家庭主丧事@家,院', '霜雪降主事不成@霜'],
+    why: '雪代表纯净、冷静，也可能是情感上的冷淡或停滞。', mean: '事情进入冷静期，适合沉淀。', care: '注意保暖，也别让关系冷下去。' },
+
+  { name: '打雷 / 闪电', keys: ['雷', '闪电', '霹雳'], ch: '天地日月星辰', tone: 1,
+    lines: ['雷霆作事官位至', '雷声恐怕移居吉@怕,吓', '雷从地震主志遂@地', '身被霹雳主富贵@劈,打中', '电光照身有吉庆@闪电,电光'],
+    why: '雷电代表突然的觉醒、震撼的消息或爆发的情绪。', mean: '可能有突如其来的变化——古书多视为吉兆。', care: '变化来时保持冷静。' },
+
+  { name: '风', keys: ['风', '台风'], not: ['风景', '风扇', '风格', '风水'], ch: '天地日月星辰', tone: 0,
+    lines: ['风如吼主远信至@吼', '忽大风国有号令@大风', '风吹屋动主迁移@屋,房', '风吹人衣主疾病@衣'],
+    why: '风代表变化与消息，也可能是外界的压力。', mean: '环境或计划可能有变动。', care: '注意保暖防感冒。' },
+
+  { name: '云 / 彩虹 / 霞', keys: ['云', '彩虹', '霞'], ch: '天地日月星辰', tone: 0,
+    lines: ['五色云主大吉昌@彩,五色', '云开日出凶事散@云开', '霞满天百事欢悦@霞', '云赤白吉青黑凶', '赤虹见吉黑虹凶@彩虹,虹',
+            '见浮云作事不成@浮云', '黑云至地时气病@黑云,乌云'],
+    why: '天空的景象反映你的心情：晴朗＝开朗，乌云＝烦闷。', mean: '彩云彩虹是好兆头，乌云则提醒你心里有事。', care: '心情不好时多晒太阳。' },
+
+  { name: '太阳', keys: ['太阳', '日出', '阳光', '日落'], ch: '天地日月星辰', tone: 1,
+    lines: ['日初出无云大吉@日出', '日出有光有好事@光', '日月照身得重位@照', '日光入屋官位至@屋,家', '吞日月当生贵子@吞',
+            '日月落忧没父母@落,日落,下山', '云忽遮日有阴私@遮,挡'],
+    why: '太阳象征希望、活力与成功。', mean: '心里有光，前景明朗。', care: '保持正能量，多到户外走走。' },
+
+  { name: '月亮 / 星星', keys: ['月亮', '月光', '星星', '流星', '星空'], ch: '天地日月星辰', tone: 1,
+    lines: ['日入怀贵子月女@怀', '星入怀主生贵子@星', '天星明主公卿至@亮,明', '持执星宿大富贵@抓,摘', '拜星月烧香大吉@拜',
+            '日月昏暗孕妇吉@暗', '流星不落主移居@流星', '星落有病及官事@落'],
+    why: '月亮代表内心与感情，星星代表愿望与理想。', mean: '你心中有一个想实现的愿望。', care: '把愿望写下来，一步步去做。' },
+
+  { name: '天空 / 上天', keys: ['上天', '天空', '天上', '天门'], ch: '天地日月星辰', tone: 1,
+    lines: ['天门开贵人荐引@天门,开', '仰面向天大富贵@仰,看天', '飞上天富贵大吉@飞', '天上取物位王侯@拿,取', '登天上屋得高官@登,爬', '天裂有分国之忧@裂'],
+    why: '天空代表无限的可能与更高的追求。', mean: '你正在往更高的地方走。', care: '心可以很大，脚步要稳。' },
+
+  { name: '火 / 灯烛', keys: ['火', '着火', '烧', '蜡烛', '灯'], not: ['火大', '发火', '火车', '火锅', '火腿', '烧烤', '发烧', '灯光秀'], ch: '水火盗贼灯烛', tone: 1,
+    lines: ['火烧自屋主兴旺@屋,房,家', '火焰炎炎主发财@大火,火焰,很旺', '身在火中贵人扶@身上,自己,被烧', '宅中火光大吉利@光', '把火行路大通达@火把,拿,举',
+            '火烧山野大显达@山', '见烛者主大发财@蜡烛', '灯烛光明主大吉@灯', '厨中火出有急事@厨房', '火从地生疾病至@地', '火烟黑色主疾病@烟,黑'],
+    why: '火代表热情与欲望，也可能是压抑着的怒气或焦急。',
+    mean: '火势旺：干劲足、财运旺；黑烟弥漫：身体或情绪透支。',
+    care: '控制脾气，别冲动；也顺便检查家里用火用电。',
+    scenes: [['灭,扑灭', '灭火', '你在努力控制局面，或压下怒气。'], ['烧伤,被烧', '被火烧', '压力或情绪快要爆发；古说身在火中反得贵人扶。'],
+             ['房子着火,家里着火,家着火', '家中着火', '古说主兴旺；心理上是家里有热情，也可能有争执。'], ['烟', '浓烟', '事情不明朗，注意健康。']],
+    life: ['干劲足、有冲劲。', '火旺主发财。', '热情升温，也要防吵架。', '注意上火与心血管。'] },
+
+  { name: '小偷 / 强盗', keys: ['贼', '小偷', '抢劫', '强盗', '被偷'], ch: '水火盗贼灯烛', tone: 0,
+    lines: ['与贼同行大吉利@一起', '己身作贼所求得@自己偷,我偷', '强贼入宅主家破@家,屋', '赶贼入市不出凶@追,赶'],
+    why: '小偷代表「被夺走」的感觉——时间、感情、机会或功劳。', mean: '你担心失去某样重要的东西。', care: '留意财物与个人信息安全。' },
+
+  { name: '掉牙', keys: ['牙', '齿'], ch: '身体面目齿发', tone: -1,
+    lines: ['齿自落者父母凶@掉,落,脱', '齿落更生子孙兴@长出,新牙,又长'],
+    why: '掉牙是最常见的焦虑梦之一，多和担心形象、怕失去控制、怕说错话有关，压力大时特别常见。',
+    mean: '古人以齿比喻亲人，所以有「齿落父母凶」之说。',
+    care: '多关心家中长辈的健康；自己也注意口腔和作息。',
+    scenes: [['全掉,都掉,一颗颗', '牙全掉光', '压力很大、失控感强。'], ['血', '掉牙出血', '古人认为与亲人有关，多关心家人。'],
+             ['蛀,烂', '蛀牙', '有件事在慢慢变坏，该处理了。'], ['长出,新牙', '长出新牙', '古说子孙兴旺，困难后有新开始。']],
+    life: ['怕说错话、怕出错，放轻松。', '花钱谨慎。', '多关心家人。', '注意口腔健康与睡眠。'] },
+
+  { name: '头发 / 眉', keys: ['头发', '掉发', '剪发', '秃', '白发', '眉', '梳头'], ch: '身体面目齿发', tone: 0,
+    lines: ['头白主长命大吉@白', '头须再生主长命@长出', '眉与发齐禄位至@眉', '梳头洗面百忧去@梳', '头秃发落皆凶事@掉,秃',
+            '剃头剪发家内凶@剪,剃', '披发盖面官讼至@披'],
+    why: '头发和精力、形象有关。', mean: '你可能想换个状态。', care: '早点睡，减减压。',
+    scenes: [['剪', '剪头发', '想改变、告别过去。'], ['掉', '掉头发', '压力与焦虑。'], ['白', '白头发', '古说长命大吉。']] },
+
+  { name: '洗澡 / 梳洗', keys: ['洗澡', '洗头', '洗脸', '洗手', '洗脚', '沐浴'], ch: '身体面目齿发', tone: 1,
+    lines: ['沐浴迁官疾病除@洗澡,沐浴', '洗手洗足旧病除@洗手,洗脚', '梳头洗面百忧去@洗脸,洗头'],
+    why: '洗澡代表清理、放下、重新开始。', mean: '烦恼正在被洗去。', care: '给自己一个"重新开始"的仪式。' },
+
+  { name: '镜子', keys: ['镜'], ch: '身体面目齿发', tone: 0,
+    lines: ['照镜明吉暗者凶', '破镜照人主分散@破,碎'],
+    why: '镜子是自我审视——你在意自己的样子，或在反省。', mean: '看清自己，比看清别人更重要。', care: '少和别人比较。' },
+
+  { name: '生病 / 医院', keys: ['生病', '病了', '发烧', '住院', '医院', '病人'], ch: '哀乐病死歌唱 · 身体面目齿发', tone: 0,
+    lines: ['自疾病者主有喜@自己,我', '病卧为人扶加官@扶', '病人哭笑疾病除@哭,笑', '病重者主有凶事@重', '身上汗出主凶恶@汗'],
+    why: '梦见生病，多是身体或心理累了的提醒。', mean: '古书反说「自疾病者主有喜」。', care: '该休息就休息，有不适及时检查。' },
+
+  { name: '裸体', keys: ['裸', '没穿衣服', '光着', '赤身'], ch: '身体面目齿发', tone: 1,
+    lines: ['露体无衣大吉利', '男子裸体命通达@男', '妇人赤身主大吉@女'],
+    why: '现代解读：怕被看穿、担心缺点暴露，或怕在人前出丑。古书却多视为吉兆。',
+    mean: '放下包袱，坦然面对，反而通达。', care: '人无完人，坦然一点更轻松。',
+    scenes: [['人多,很多人,被看,大家', '在人前裸体', '担心丢脸或秘密被发现。']] },
+
+  { name: '血 / 受伤', keys: ['血', '受伤', '伤口'], ch: '被害斗伤打骂', tone: 1,
+    lines: ['刀伤出血主酒食@刀', '砍刺见血主大吉@砍,刺', '手足脓血出大吉@手,脚', '杀人血污衣得财@衣', '刀斧自伤主大吉@自己,割'],
+    why: '血代表生命力与消耗。最近可能太累，或心里觉得受了伤。', mean: '古书多以见血为吉。', care: '注意休息，别透支身体。' },
+
+  { name: '屎尿 / 厕所', keys: ['屎', '粪', '厕所', '大便', '尿'], ch: '门户井灶厨厕 · 身体面目齿发', tone: 1,
+    lines: ['屎尿污人大吉亨@沾,弄到,身上,踩', '厕中屎溢大吉利@满,溢', '上厕在屎尿中吉@掉进', '淘厕者主得横财@清,扫,洗', '粪土堆积主得财@堆',
+            '粪中坐者主大凶@坐', '扫地除粪家欲破@扫地'],
+    why: '心理上是「清理、释放」——把不需要的东西排出去。民间普遍视为得财之兆。',
+    mean: '有财运，或积压的事情终于有出口。', care: '别因为一个梦就冲动投资。',
+    life: ['积压的事情有进展。', '古书多主得财、横财。', '把心里话说出来。', '注意肠胃。'] },
+
+  { name: '死亡 / 逝者', keys: ['死', '去世', '过世', '尸', '复活'], not: ['吓死', '笑死', '累死', '死机', '饿死', '气死', '死鱼'], ch: '哀乐病死歌唱', tone: 0,
+    lines: ['见先亡尊长大吉@爷爷,奶奶,外公,外婆,爸爸,妈妈,长辈,亲人,爸,妈', '见人死自死者吉@自己死,我死', '死人复活主有信@复活,活了,活过来',
+            '死人哭怀者得财@抱,怀', '子死者有添喜事@孩子,儿子,女儿', '死人出棺外客至@棺', '问吊他人主生子@葬礼,吊唁',
+            '死人哭泣有口舌@哭', '死人立者主大凶@站'],
+    why: '梦见死亡多数不代表真的不祥，而是「某件事结束、新阶段开始」。梦见过世的亲人，往往是思念，或想得到支持。',
+    mean: '旧习惯、旧关系可能正在告一段落。', care: '若梦见家人，可以多和他们联络；不必过度担忧。',
+    scenes: [['自己死,我死', '梦见自己死', '一个阶段结束、新的自己诞生——古说反主吉。'],
+             ['爷爷,奶奶,外公,外婆,爸,妈,亲人,长辈', '梦见已故亲人', '思念，或在寻找支持；古说「见先亡尊长大吉」。'],
+             ['复活,活过来', '死而复生', '有消息到来，或旧事重提。'], ['葬礼', '参加葬礼', '告别过去，迎接新开始。']],
+    life: ['旧阶段结束，新机会开始。', '古说有财有信。', '旧关系告一段落。', '注意情绪低落。'] },
+
+  { name: '棺材 / 坟墓', keys: ['棺', '坟', '墓'], ch: '冢墓棺椁迎送', tone: 1,
+    lines: ['棺自出墓中大吉', '抬棺入宅禄位至@抬', '棺殓死人主得财@入殓,装', '见棺水上大得财@水', '冢墓高者大吉利@高',
+            '冢墓门开百事吉@开', '冢墓上开花大吉@花', '新冢棺椁主忧除@新', '开棺与死人言凶@说话'],
+    why: '民间「棺」谐音「官」「财」，常视为升官发财之兆；心理上则代表告别旧事。',
+    mean: '事业、财务可能迎来转机。', care: '机会来时要稳，不宜贪快。',
+    life: ['升官之兆。', '见棺发财。', '放下过去。', '平稳。'] },
+
+  { name: '哭', keys: ['哭'], ch: '哀乐病死歌唱', tone: 0,
+    lines: ['放声大哭欢乐至@大哭,放声', '与人哭泣有庆贺@一起哭,抱着哭', '床上哭泣主大凶@床', '远人来悲泣主凶@远', '露齿哭者有争讼@露齿'],
+    why: '梦里哭是在释放白天压住的情绪，醒来后常会觉得轻松。', mean: '情绪得到释放，好事可能随后到来。', care: '允许自己难过，也找人倾诉。' },
+
+  { name: '唱歌 / 跳舞 / 音乐', keys: ['唱歌', '跳舞', '音乐', '弹琴', '打鼓', '吉他', '笛'], ch: '哀乐病死歌唱', tone: 0,
+    lines: ['家中欢喜百事吉@家', '吹笛打鼓有吉庆@鼓,笛', '怀中琵琶得人助@琵琶,吉他', '见歌舞者口舌至@跳舞,看'],
+    why: '音乐和舞蹈代表快乐与表达自我。', mean: '你想被看见、想放松。', care: '开心之余，说话留三分。' },
+
+  { name: '打架 / 吵架 / 杀人', keys: ['打架', '吵架', '打人', '被打', '杀人', '被杀', '骂', '砍'], ch: '被害斗伤打骂', tone: 1,
+    lines: ['被人杀害者大吉@被杀,杀我', '杀死他人大富贵@杀人,杀了', '被人打者主得力@被打,打我', '与人相骂者主吉@骂,吵架', '兄弟相打大吉利@兄弟,哥哥,弟弟',
+            '向人叩头百事吉@磕头', '女人相打主病至@女', '家中人斗主分散@家人', '持刀斫人自失财@砍人'],
+    why: '现实中压抑的不满或冲突，在梦里释放出来了。',
+    mean: '古书多以梦中争斗为吉——把气出完，现实反而顺。', care: '有些话找合适的时机，平和地说出口。',
+    scenes: [['被杀,杀我', '被杀', '古说反主大吉；心理上是感到被威胁，或想结束某种状态。'], ['杀人,杀了', '杀人', '你想彻底摆脱某件事或某种性格。'],
+             ['吵架,骂', '吵架', '压抑的不满。']] },
+
+  { name: '鬼怪', keys: ['鬼', '怪物', '恶魔', '僵尸'], ch: '佛道僧尼鬼神', tone: -1,
+    lines: ['与鬼斗者主延寿@打,斗,打败,赶走', '被神鬼打大不祥@被打,打我'],
+    why: '鬼怪通常是没解决的恐惧、内疚，或过去的阴影。', mean: '有件事一直压在心里没处理。',
+    care: '睡前放松，少看恐怖内容；心里的事找人聊聊。',
+    scenes: [['打,斗,赶走,打败', '与鬼搏斗', '你正在面对恐惧——古说主延寿。'], ['追', '被鬼追', '逃避中的恐惧，需要面对。']] },
+
+  { name: '神佛 / 寺庙', keys: ['佛', '菩萨', '神仙', '庙', '观音', '烧香', '拜拜', '寺'], ch: '佛道僧尼鬼神', tone: 1,
+    lines: ['诸佛菩萨大吉利', '烧香礼拜皆大吉@烧香,拜', '入神庙神动大吉@庙', '仙圣到家福禄至@家', '佛共人言有福助@说话,讲话',
+            '入寺院中生男子@寺', '神佛不成形大凶@不成形,破'],
+    why: '神佛代表内心的信念与寻求庇护。', mean: '你在寻找方向与安心。', care: '心诚则安，凡事尽力而为。',
+    life: ['有贵人与庇佑。', '福禄将至。', '心安则情顺。', '身心平安。'] },
+
+  { name: '结婚', keys: ['结婚', '婚礼', '嫁', '娶', '新娘', '新郎'], ch: '夫妻产孕交欢', tone: 0,
+    lines: ['水流洋洋有新婚@水', '夫妻入市主置产@逛,市场,买', '见嫁娶及孝主凶'],
+    why: '结婚象征承诺、结合或进入人生新阶段；也可能是对感情的期待或焦虑。',
+    mean: '你在认真思考一段关系，或一个重要的承诺。', care: '感情里多沟通真实的想法。',
+    scenes: [['自己结婚,我结婚', '自己结婚', '对新阶段的期待，或对承诺的紧张。'], ['别人结婚,参加', '参加别人婚礼', '羡慕或在思考自己的感情。'],
+             ['逃婚,不想', '逃婚', '对某个承诺感到压力。']] },
+
+  { name: '伴侣 / 夫妻', keys: ['老公', '老婆', '丈夫', '妻子', '男朋友', '女朋友', '伴侣', '夫妻', '对象'], ch: '夫妻产孕交欢', tone: 0,
+    lines: ['抱夫主大得财喜@抱', '夫妻相打欲和会@打', '妇人与夫入水吉@水', '夫妻各与梳头吉@梳头', '妻著锦衣生贵子@新衣,漂亮',
+            '夫妻相骂主病患@吵,骂', '夫妻宴会主相别@吃饭,宴', '夫妻相拜主分散@拜'],
+    why: '梦见伴侣，反映你对这段关系的感受——安心、期待或不安。', mean: '感情是你近期在意的主题。', care: '把感受说出来，比猜测更有用。',
+    scenes: [['出轨,背叛,劈腿,外遇', '伴侣出轨', '多是不安全感的投射，不代表真实发生。'], ['分手,离婚', '分手', '担心失去，或关系需要更多沟通。'],
+             ['打', '夫妻打架', '古说「欲和会」——吵完反而和好。']],
+    life: ['家庭和顺，事业更稳。', '古说抱夫得财。', '多沟通、多陪伴。', '情绪影响睡眠，注意放松。'] },
+
+  { name: '怀孕 / 生子', keys: ['怀孕', '生孩子', '婴儿', '宝宝', '生子', '小孩'], ch: '夫妻产孕交欢', tone: 1,
+    lines: ['新生男女主大吉@生,婴儿,宝宝', '妇人见龙生贵子@龙', '鹤入怀中生贵子@鹤', '抱小儿女主口舌@抱', '小儿死者主口舌@死'],
+    why: '怀孕代表新想法、新计划正在孕育。', mean: '你心里有一件想开始的事。', care: '好点子要趁早行动。',
+    life: ['新计划起步。', '有新财源。', '感情有新进展。', '注意营养与休息。'] },
+
+  { name: '房屋 / 搬家', keys: ['房子', '屋', '房间', '家里', '搬家', '装修'], ch: '宫室屋宇仓库', tone: 0,
+    lines: ['屋宅更新主大吉@新房,新家,装修', '迁入他人新宅吉@搬家,搬进', '洒扫宅舍远人来@打扫,扫', '屋上生松柏益寿@松,树', '风吹屋动主迁移@摇,晃',
+            '上屋破坏家道凶@破,坏', '房梁忽折主大凶@梁,塌', '屋中生草家欲空@草', '屋宅无人主死亡@没人,空', '与人争屋主大凶@争'],
+    why: '房子代表「你自己」和内心状态。发现新房间：发现自己的新潜能；破旧的房子：身心疲惫。',
+    mean: '你在审视自己的生活状态。', care: '照顾好自己和家里的气氛。',
+    scenes: [['新房间,发现', '发现新房间', '发现自己的新潜能。'], ['破,旧,塌', '房子破旧倒塌', '身心疲惫，或家里有压力。'], ['搬家', '搬家', '想换个环境，生活要变动。']] },
+
+  { name: '高楼 / 宫殿 / 电梯', keys: ['楼', '宫殿', '皇宫', '城', '电梯'], not: ['楼下', '城市'], ch: '宫室屋宇仓库', tone: 1,
+    lines: ['上楼阁坛主大吉@上楼,爬楼', '上高堂大富贵至@高', '高楼饮酒富贵至@喝酒', '家起高楼安稳事@盖,建', '入帝王宫行大吉@宫殿,皇宫', '城郭广大财喜多@城'],
+    why: '高处代表地位与目标。', mean: '往上走＝运势上扬。', care: '站得越高越要稳。',
+    scenes: [['电梯', '电梯', '上升＝运势上扬；失控下坠＝怕失去掌控。'], ['跳楼,掉下楼', '从楼上掉下', '怕失去现有的位置。']] },
+
+  { name: '山 / 石 / 地', keys: ['山', '石头', '岩石', '地震', '地裂'], not: ['山东', '山西'], ch: '地理山石树木', tone: 1,
+    lines: ['居住高山有喜事@住', '山行得财有福缘@走,爬', '游看高山春夏吉@看', '上山恐怕禄位至@怕', '行走上坡病思除@上坡',
+            '抱物上山孕贵子@抱', '运石入家主富贵@搬石,运', '盘石安稳无忧疑@石', '地动主迁官位吉@地震',
+            '升山落地主失位@掉,摔', '上山毁坏主凶恶@塌,崩', '地裂主疾病大凶@裂'],
+    why: '山代表目标与挑战。爬上山顶：目标即将达成。', mean: '你正在努力往上走。', care: '一步一步来，别急。',
+    scenes: [['山顶,爬上', '登上山顶', '目标即将达成。'], ['爬不上,爬不动', '爬不上山', '觉得目标太难，需要调整方法。'], ['地震', '地震', '生活根基有变动；古说主迁官。']] },
+
+  { name: '坠落', keys: ['掉下', '坠', '摔', '跌', '往下掉', '掉落'], not: ['牙掉', '齿掉', '发掉'], ch: '地理山石树木 · 门户井灶', tone: -1,
+    lines: ['身坠井中疾病凶@井', '升山落地主失位@山,高处,楼'],
+    why: '从高处坠落，多反映缺乏安全感，或觉得某件事正在失控。', mean: '常出现在换工作、考试、感情不稳定的时期。',
+    care: '找出最让你没把握的那件事，先做能掌控的部分。',
+    scenes: [['醒', '坠落时惊醒', '常见的「入睡抽动」，多与疲劳有关。']] },
+
+  { name: '飞', keys: ['飞', '翅膀'], not: ['飞机'], ch: '天地日月星辰', tone: 1,
+    lines: ['飞上天富贵大吉@天,飞起来,飞翔,在飞', '飞鸟入怀皆主吉@鸟'],
+    why: '飞翔多代表渴望自由、想摆脱束缚，或最近很有成就感。',
+    mean: '飞得高：自信心强；飞不起来、飞得很低：觉得被现实拖住。', care: '想法多的时候，记得脚踏实地。',
+    scenes: [['飞不起来,飞不高,飞得低', '飞不起来', '觉得被现实拖住。'], ['掉下来,摔', '飞着掉下来', '怕自己撑不住目前的高度。']] },
+
+  { name: '树 / 森林', keys: ['树', '森林', '竹'], ch: '地理山石树木', tone: 1,
+    lines: ['登大树名利显扬@爬树,上树', '立树下贵人庇荫@树下', '砍伐大树多得财@砍', '种植树木大吉昌@种', '园林茂盛大吉利@茂盛,森林',
+            '枯木开花子孙兴@开花', '庭前竹木喜重重@竹', '上树忽折有死伤@折,断', '树木枯死宅不安@枯', '大树忽折主凶恶@倒'],
+    why: '树代表成长与家族根基。', mean: '你在关注自己的成长或家庭。', care: '多陪陪家人。' },
+
+  { name: '花 / 果 / 菜', keys: ['花', '水果', '果树', '苹果', '桃', '菜园', '笋'], not: ['花钱', '花了', '花时间', '桃花运'], ch: '地理山石树木', tone: 1,
+    lines: ['冢墓上开花大吉@坟,墓', '兰生庭前主添孙@兰', '乘船看花酒食至@船', '果树多熟子孙安@熟,结果', '果林中行主得财@果园',
+            '入菜园中大发财@菜园', '见笋者主添子孙@笋', '与人分花主分散@分,送'],
+    why: '花象征美好与感情；果实代表努力的成果。', mean: '生活中有美好的事在发生，或收获在即。', care: '珍惜身边的人。' },
+
+  { name: '车 / 交通', keys: ['车', '开车', '马车'], not: ['火车', '车站', '车厢'], ch: '船车游行物件', tone: 0,
+    lines: ['驾车游行禄位至@开车,驾', '车行主百事顺和@顺', '车不行所求不遂@坏,不动,抛锚', '车轮折倒主破败@翻,车祸,撞', '车入门主有凶事@门'],
+    why: '交通工具代表你对人生方向的掌控。', mean: '你在意事情是否在自己掌握之中。', care: '近期出行注意交通安全。',
+    scenes: [['刹车,刹不住,失灵', '刹车失灵', '失控感，事情发展太快。'], ['别人开,坐车', '别人开车', '人生方向由别人主导。'], ['车祸,撞', '车祸', '担心突发状况，宜放慢脚步。']] },
+
+  { name: '船', keys: ['船'], ch: '船车游行物件', tone: 1,
+    lines: ['船飞行主大富贵@飞', '乘船渡江河得官@渡,过河', '船中有水主得财@水', '乘船风帆大吉利@帆', '乘船饮酒远客至@喝酒',
+            '船浅在岸是非厄@搁浅,岸', '船车破碎主不祥@破,沉', '身卧船中主有凶@躺,睡'],
+    why: '船代表人生旅程，以及你在情绪之海中的状态。', mean: '一帆风顺，或正在渡过难关。', care: '顺势而行，别逆流硬撑。' },
+
+  { name: '桥 / 路', keys: ['桥'], ch: '道路桥梁市集', tone: 0,
+    lines: ['新造桥者大和合@新,建,造', '乘船桥下过大吉@船', '携手上桥妻有孕@牵手,手牵', '桥断者主有口舌@断,塌', '见桥坏主有官事@坏'],
+    why: '桥代表过渡与连接，你可能正处在人生的转折点。', mean: '一段关系或一个阶段正在衔接。', care: '与人沟通时多一分耐心。' },
+
+  { name: '门', keys: ['门'], not: ['门口', '出门', '部门'], ch: '门户井灶厨厕', tone: 0,
+    lines: ['门户高大主富贵@大门,高大', '新开门户大富贵@新', '门户大开大吉利@开', '门户闭塞事不通@关,打不开,锁', '门扇自折奴仆走@断',
+            '门户破坏主大凶@破,坏', '门自开妻有私情@自己开'],
+    why: '门象征机会与选择。', mean: '门大开：机会来临；门打不开：受阻。', care: '机会来时勇敢推门。',
+    scenes: [['打不开,锁', '门打不开', '有件事卡住了，换条路试试。'], ['敲门', '有人敲门', '有机会或消息来找你。']] },
+
+  { name: '井 / 厨房', keys: ['井', '厨房', '灶', '做饭'], ch: '门户井灶厨厕', tone: 0,
+    lines: ['井中照身禄位至@照', '井中沸溢主得财@溢,冒', '穿井见水远信至@挖', '取井水清吉混凶@打水', '修造厨灶大吉利@修,厨房',
+            '灶下燃火有声名@火', '灶下水流得横财@水', '井枯涸者家财散@枯,干', '井自损坏家大败@坏', '灶釜破败有死亡@破'],
+    why: '井与厨房代表家庭的根本与资源。', mean: '你在关心家里的经济与生活。', care: '守住财源，别乱花。' },
+
+  { name: '衣服 / 帽子', keys: ['衣服', '裙子', '衣', '帽'], ch: '冠带衣服鞋袜', tone: 0,
+    lines: ['新换衣冠禄位至@新', '著锦绣衣子孙荣@漂亮,华丽', '洗染衣服皆大吉@洗', '被油污衣大恩泽@油,脏', '衣带自解百事吉@解开',
+            '著白衣主有人请@白', '著青衣神人助力@青,绿', '著黄衣皂衣皆吉@黄,黑', '衣服忽破妻外心@破', '失去冠帽去退职@丢帽', '失却衣服妻难产@丢,不见'],
+    why: '衣服代表外在形象与社会身份。', mean: '你在意别人怎么看你。', care: '做自己就好。',
+    scenes: [['新', '穿新衣', '新形象、新身份，古说禄位至。'], ['破', '衣服破了', '担心形象受损或关系出问题。'], ['丢,不见', '衣服丢了', '失去安全感或身份认同。']] },
+
+  { name: '鞋', keys: ['鞋', '靴'], ch: '冠带衣服鞋袜', tone: 0,
+    lines: ['得靴鞋主奴婢吉@得,买,新', '乞得鞋履人助力@送,给', '著麻鞋百事和合@麻', '木履脱时己出厄@脱', '失履主奴婢逃走@丢', '鞋破子孙妻妾病@破'],
+    why: '鞋代表人生方向与脚下的路。', mean: '你在思考下一步往哪走。', care: '走稳脚下这一步。',
+    scenes: [['丢,找不到', '丢鞋', '对前途不确定。'], ['新', '穿新鞋', '新的方向、新的开始。']] },
+
+  { name: '钱财 / 金银', keys: ['钱', '金子', '黄金', '银', '宝', '中奖', '发财', '珠', '玉'], ch: '金银珠玉绢帛', tone: 1,
+    lines: ['拾得钱物皆大吉@捡', '金银宝者主富贵@金,银,宝', '金银珠玉大吉利@珠,玉', '得铜物主大富贵@铜', '见铁器物主得财@铁',
+            '还人钱物疾病去@还', '钱春夏吉秋冬凶', '家中分财主离败@分', '珠玉满怀主大凶@满怀'],
+    why: '钱代表自我价值感与安全感。', mean: '你对未来收入有期待，或正在评估自己的价值。', care: '理财要谨慎，别因为一个梦就冲动投资。',
+    scenes: [['捡', '捡到钱', '期待回报，古说大吉。'], ['丢,掉,被偷', '丢钱', '担心失去安全感。'], ['给别人,送钱,借', '把钱给别人', '付出很多，想被认可。'],
+             ['中奖', '中奖', '期待好运降临，也提醒你别太依赖运气。']],
+    life: ['工作有回报。', '财运好，正偏财皆有。', '感情中也谈得来钱的事。', '平稳。'] },
+
+  { name: '吃喝 / 喝酒', keys: ['吃', '喝酒', '饭', '宴', '酒'], not: ['吃惊', '吃醋'], ch: '饮食酒肉瓜菜', tone: 0,
+    lines: ['高楼饮酒富贵至@楼', '乘船饮酒远客至@船', '死人食者主疾病@死人', '夫妻宴会主相别@夫妻'],
+    why: '吃喝代表需求被满足、汲取能量；也可能是你最近太饿或太累了。', mean: '你需要补充能量，物质或精神上都是。', care: '好好吃饭，别亏待自己。' },
+
+  { name: '被追赶', keys: ['追', '逃'], not: ['追剧', '追星'], ch: null, tone: 0, lines: [],
+    why: '被追是最常见的压力梦——你可能在逃避某个问题、某个人或某个决定。',
+    mean: '追你的是什么，往往就是你在回避的东西。', care: '停下来面对，问题通常会变小。',
+    scenes: [['跑不动,跑不快,腿软', '想跑跑不动', '觉得无力应对眼前的压力。'], ['躲', '躲起来', '想暂时逃离，需要休息。'], ['被抓', '被抓到', '该面对的事终究要面对。']] },
+
+  { name: '考试 / 学校', keys: ['考试', '考场', '答题', '试卷', '考不', '学校', '老师', '上课'], ch: null, tone: 0, lines: [],
+    why: '梦见考试，多是担心被评价、怕自己准备不足；常出现在工作要汇报、要考核的时候。',
+    mean: '你对自己要求很高。', care: '准备充分就能安心，也别对自己太苛刻。',
+    scenes: [['不会,答不出,空白', '题目不会做', '担心能力不足。'], ['迟到', '考试迟到', '怕错过机会。']] },
+
+  { name: '工作 / 老板', keys: ['老板', '上司', '上班', '同事', '公司', '加班', '开会'], ch: null, tone: 0, lines: [],
+    why: '工作场景入梦，是白天压力的延续。', mean: '工作在你心里占了很大位置。', care: '下班后学会切换，留时间给自己。' },
+
+  { name: '迟到 / 赶车', keys: ['迟到', '赶不上', '错过', '赶车', '赶飞机', '飞机', '火车', '高铁'], ch: null, tone: 0, lines: [],
+    why: '害怕错过机会，或觉得时间不够用；旅途也代表人生方向。', mean: '生活节奏太紧。', care: '排好优先次序，不必每件事都抓。' },
+
+  { name: '迷路', keys: ['迷路', '找不到路', '走丢', '找不到'], ch: null, tone: 0, lines: [],
+    why: '对人生方向感到迷茫，或在一个选择前犹豫不决。', mean: '你正在寻找答案。', care: '把选项写下来，一个个比较。' },
+
+  { name: '前任', keys: ['前任', '前男友', '前女友', '旧情人', '前夫', '前妻'], ch: null, tone: 0, lines: [],
+    why: '梦见前任，多是还有没放下的情绪，或下意识在拿现在的关系做比较——不一定代表还爱对方。',
+    mean: '有一段过去值得好好告别。', care: '把注意力放回现在的生活。',
+    scenes: [['复合,和好', '和前任复合', '怀念当时的自己，而不一定是那个人。'], ['结婚', '前任结婚', '提醒你真正放下。']] },
+];
+
+// —— 原文吉凶判断 ——
+const LINE_GOOD_FIX = ['无忧', '忧除', '忧去', '病除', '病去', '病痊', '病思除', '厄事去', '灾散', '凶事散', '出厄', '病患安', '所求得', '无恶'];
+const LINE_BAD = ['凶', '病', '亡', '口舌', '失', '破', '败', '分散', '辱', '讼', '灾', '忧', '不祥', '厄', '别', '离', '私情', '外心',
+                  '不成', '不通', '狱', '逃走', '难产', '患', '不遂', '不得', '是非', '阴私', '丧', '孝服', '官事', '伤', '欲空', '欲破', '贼', '散', '急事', '退'];
+const LINE_GOOD = ['吉', '贵', '财', '富', '喜', '禄', '官', '寿', '遂', '安', '兴', '旺', '助', '利', '荣', '达', '顺', '昌', '名',
+                   '子', '孙', '酒食', '恩', '和', '庆', '欢', '成', '力', '信', '婚', '亨', '至', '印', '提携', '文章', '好事',
+                   '重位', '王侯', '长命', '置产', '孕', '添'];
+function judgeLine(t) {
+  if (t.includes('吉') && t.includes('凶')) return null;
+  const m = t.lastIndexOf('主');
+  const tail = m >= 0 ? t.slice(m + 1) : t.slice(-4);
+  if (LINE_GOOD_FIX.some(w => tail.includes(w))) return 1;
+  const b = LINE_BAD.filter(w => tail.includes(w)).length * 1.5;
+  const g = LINE_GOOD.filter(w => tail.includes(w)).length;
+  return b > g ? 0 : g > b ? 1 : null;
+}
+DREAMS.forEach(d => {
+  d.lines = d.lines.map(s => { const [t, c = ''] = s.split('@'); return { s: t, ctx: c ? c.split(',') : [], g: judgeLine(t) }; });
+  d.scenes = (d.scenes || []).map(([c, title, text]) => ({ ctx: c.split(','), title, text }));
+});
+
+const GENERIC_LIFE = {
+  1:  ['运势向上，可主动争取。', '财运平稳向上。', '感情和顺。', '精神状态良好。'],
+  0:  ['按部就班即可。', '收支平衡，量入为出。', '多沟通，少猜测。', '规律作息。'],
+  '-1': ['做事多留余地，不宜冒进。', '谨慎理财，防破财。', '避免争执。', '多休息，留意身体信号。'],
+};
+const LIFE_NAMES = ['事业', '财运', '感情', '健康'];
+
+const MOODS = [
+  { k: 'fear',   label: '😨 害怕', words: ['害怕', '恐惧', '吓', '可怕', '恐怖', '惊醒'], neg: true,
+    note: '梦中的恐惧多是白天压力的投射，最近可能有一件让你没把握的事。', tip: '睡前少看刺激内容，把担心的事写下来再睡。' },
+  { k: 'anx',    label: '😰 焦虑', words: ['焦虑', '紧张', '着急', '慌'], neg: true,
+    note: '焦虑型的梦常出现在有截止日期、要被评价的时期。', tip: '把大事拆成小步骤，一件件完成。' },
+  { k: 'sad',    label: '😢 难过', words: ['难过', '伤心', '委屈', '失落', '心痛'], neg: true,
+    note: '梦里的悲伤，常是在释放白天压下去的情绪。', tip: '找信任的人聊聊，或写写日记。' },
+  { k: 'angry',  label: '😠 生气', words: ['生气', '愤怒', '气死', '火大'], neg: true,
+    note: '梦中的愤怒，多是现实里说不出口的不满。', tip: '找合适的方式表达，别憋着。' },
+  { k: 'confus', label: '😵 迷茫', words: ['迷茫', '奇怪', '莫名', '困惑'], neg: false,
+    note: '迷茫的梦反映你正在做选择、方向还没定。', tip: '列出选项和优先次序。' },
+  { k: 'calm',   label: '😌 平静', words: ['平静', '安心', '舒服', '温暖'], neg: false,
+    note: '平静的梦说明心态稳定，内在能量充足。', tip: '保持现在的节奏。' },
+  { k: 'happy',  label: '😄 开心', words: ['开心', '快乐', '高兴', '幸福', '兴奋'], neg: false,
+    note: '美梦代表内心满足或有所期待，近期状态不错。', tip: '趁势推进想做的事。' },
+];
+let pickedMood = null;
+
+const DREAM_LEVELS = [
+  { min: 3,   level: '上上吉', poem: '祥云瑞气入梦来，福星高照喜盈怀。',
+    yi: ['主动出击', '谈合作、见客户', '表白或约会', '出行'], ji: ['骄傲自满', '挥霍'] },
+  { min: 1,   level: '吉',     poem: '夜梦呈祥心自宽，顺时而动事皆安。',
+    yi: ['推进计划', '联络贵人', '学习新东西'], ji: ['犹豫拖延', '过度消费'] },
+  { min: 0,   level: '平',     poem: '梦境平平无大碍，心安自得福常来。',
+    yi: ['按计划行事', '整理房间', '早睡早起'], ji: ['胡思乱想', '冲动决定'] },
+  { min: -1,  level: '小凶',   poem: '小有波折莫惊慌，谨言慎行自无妨。',
+    yi: ['静心', '低调做事', '多陪家人'], ji: ['争吵', '冒险投资', '熬夜'] },
+  { min: -99, level: '凶（宜化解）', poem: '梦兆虽凶莫自扰，修身养性祸自消。',
+    yi: ['检查门窗与财物', '早点休息', '找人倾诉'], ji: ['冲动行事', '借钱给人', '夜归'] },
+];
+
+function textHash(s) { let h = 17; for (const ch of s) h = (h * 131 + ch.charCodeAt(0)) % 1000003; return h; }
+
+function interpretDream(text) {
+  const found = [];
+  DREAMS.forEach(d => {
+    let t = text;
+    (d.not || []).forEach(w => { t = t.split(w).join(''); });
+    if (!d.keys.some(k => t.includes(k))) return;
+    const lines = d.lines.map(l => ({ ...l, hit: l.ctx.some(c => t.includes(c)) }));
+    const scenes = d.scenes.filter(s => s.ctx.some(c => t.includes(c)));
+    const hits = lines.filter(l => l.hit && l.g !== null);
+    const score = hits.length ? Math.sign(hits.reduce((n, l) => n + (l.g ? 1 : -1), 0)) : d.tone;
+    found.push({ d, lines, scenes, score });
+  });
+  const moods = MOODS.filter(m => m.k === pickedMood || m.words.some(w => text.includes(w)));
+  const total = found.reduce((n, f) => n + f.score, 0);
+  return { found, moods, total, level: DREAM_LEVELS.find(l => total >= l.min) };
+}
+
+function renderDream() {
+  const text = $('dreamInput').value.trim();
+  if (!text) { $('dreamResultCard').hidden = true; return; }
+  const r = interpretDream(text);
+  $('dreamResultCard').hidden = false;
+  const box = $('dreamSlip');
+  box.replaceChildren();
+  const para = (...parts) => { const p = el('p'); p.append(...parts); return p; };
+  const tag = (txt, kind) => el('span', 'tag ' + kind, txt);
+  const kindOf = s => (s > 0 ? 'good' : s < 0 ? 'bad' : 'neu');
+  const jie = el('div', 'jie');
+  const sec = (title, ...nodes) => { jie.append(el('h3', null, title)); nodes.forEach(n => jie.append(n)); };
+
+  const head = el('div', 'slip-head');
+  head.append(el('span', 'slip-level', '梦兆 · ' + r.level.level),
+              el('span', 'slip-no', new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })));
+  box.append(head, el('div', 'poem', r.level.poem));
+
+  if (r.found.length) {
+    const tags = el('p');
+    tags.append('梦中所见：', ...r.found.map(f => el('span', 'dtag', f.d.name)));
+    jie.append(tags);
+  }
+
+  // 周公曰：应验句在前，其余折叠
+  const withLines = r.found.filter(f => f.lines.length);
+  if (withLines.length) {
+    sec('周公曰', ...withLines.flatMap(f => {
+      const sorted = [...f.lines].sort((a, b) => b.hit - a.hit);
+      const anyHit = sorted.some(l => l.hit);
+      const mk = (l, first) => {
+        const p = el('p', 'zhou' + (l.hit ? ' hit' : anyHit ? ' dim' : ''));
+        p.append(`「${l.s}」`);
+        if (l.g !== null) p.append(tag(l.g ? '吉' : '凶', l.g ? 'good' : 'bad'));
+        if (first) p.append(el('small', null, `——《周公解梦·${f.d.ch}》`));
+        if (l.hit) p.append(el('small', null, '◀ 与你的梦相应'));
+        return p;
+      };
+      const showN = Math.max(4, sorted.filter(l => l.hit).length);
+      const out = sorted.slice(0, showN).map((l, i) => mk(l, i === 0));
+      if (sorted.length > showN) {
+        const det = el('details');
+        det.append(el('summary', 'more', `展开另外 ${sorted.length - showN} 句原文`), ...sorted.slice(showN).map(l => mk(l, false)));
+        out.push(det);
+      }
+      return out;
+    }));
+  }
+  const noClassic = r.found.filter(f => !f.lines.length);
+  if (noClassic.length) jie.append(para(el('small', null, `（${noClassic.map(f => f.d.name).join('、')}：周公解梦原文未见直接条目，以下按现代解梦角度说明）`)));
+
+  // 情境细解
+  const sceneNodes = [];
+  r.found.forEach(f => {
+    if (f.scenes.length) f.scenes.forEach(s => sceneNodes.push(para(tag(s.title, 'neu'), s.text)));
+  });
+  if (sceneNodes.length) sec('情境细解', ...sceneNodes);
+  const others = r.found.filter(f => !f.scenes.length && f.d.scenes.length);
+  if (others.length) {
+    const det = el('details');
+    det.append(el('summary', 'more', '其他常见情境对照（看看哪个更像你的梦）'));
+    others.forEach(f => f.d.scenes.forEach(s => det.append(para(tag(`${f.d.name}·${s.title}`, 'neu'), s.text))));
+    jie.append(det);
+  }
+
+  // 为何会梦到
+  const whys = r.found.map(f => para(tag(f.d.name, 'neu'), f.d.why));
+  r.moods.forEach(m => whys.push(para(tag(m.label, 'neu'), m.note)));
+  if (!whys.length) whys.push(para('没有找到明确的梦境符号。梦往往反映当下的心情与最近在意的事——试着写得更具体：出现了谁、什么动物、在什么地方、做了什么、感觉如何。'));
+  sec('为何会做这个梦', ...whys);
+
+  if (r.found.length) sec('寓意', ...r.found.map(f => para(tag(f.d.name, kindOf(f.score)), f.d.mean)));
+
+  // 四方面运势
+  if (r.found.length) {
+    const main = [...r.found].sort((a, b) => (b.d.life ? 1 : 0) - (a.d.life ? 1 : 0) || Math.abs(b.score) - Math.abs(a.score))[0];
+    const tone = Math.sign(r.total);
+    const life = main.d.life || GENERIC_LIFE[tone];
+    sec('近期运势', ...LIFE_NAMES.map((n, i) => para(tag(n, kindOf(tone)), life[i])));
+  }
+
+  // 宜 / 忌
+  const yi = [...r.level.yi], ji = [...r.level.ji];
+  r.moods.forEach(m => yi.push(m.tip.replace(/。$/, '')));
+  sec('今日宜忌', para(tag('宜', 'good'), yi.join('、') + '。'), para(tag('忌', 'bad'), ji.join('、') + '。'));
+
+  // 要注意
+  const cares = r.found.map(f => para('· ' + f.d.care));
+  if (cares.length) sec('要注意', ...cares);
+
+  // 幸运数字（取吉星强能量组合）
+  const LUCKY = [[13, '天医·财富'], [31, '天医·财富'], [68, '天医·财富'], [86, '天医·财富'], [14, '生气·人缘'], [41, '生气·人缘'],
+                 [67, '生气·人缘'], [76, '生气·人缘'], [19, '延年·成功'], [91, '延年·成功'], [78, '延年·成功'], [87, '延年·成功']];
+  const COLORS = ['红色', '金色', '绿色', '蓝色', '紫色', '白色', '黄色', '粉色'];
+  const h = textHash(text + new Date().toDateString());
+  const n1 = LUCKY[h % LUCKY.length], n2 = LUCKY[(h >> 3) % LUCKY.length];
+  const lucky = n1[0] === n2[0] ? [n1] : [n1, n2];
+  sec('今日幸运', para(tag('数字', 'good'), lucky.map(x => `${x[0]}（${x[1]}）`).join('、')),
+      para(tag('颜色', 'good'), COLORS[(h >> 5) % COLORS.length]));
+
+  const negMood = r.moods.some(m => m.neg);
+  let summary;
+  if (r.total > 0 && !negMood) summary = '整体是好梦，近期运势向上，保持好心情、顺势而为。';
+  else if (r.total > 0)        summary = '梦的兆头不错，但醒来心情不太好，说明好事背后你也有压力——放松一点，好运才进得来。';
+  else if (r.total < 0)        summary = '古人看来兆头欠佳，但梦更多是心情的镜子：把让你不安的那件事处理好，「凶」自然就化了。';
+  else                         summary = '梦境平稳，没有大吉大凶。多留意最近反复出现的念头，那才是梦想告诉你的事。';
+  sec('总结', para(summary));
+  box.append(jie, el('div', 'disclaimer', '※ 周公解梦为古代民间说法，现代解读仅供参考，不能代替专业意见'));
+}
+
+// 心情按钮
+$('moodRow').replaceChildren(...MOODS.map(m => {
+  const b = el('button', null, m.label);
+  b.onclick = () => { pickedMood = pickedMood === m.k ? null : m.k;
+    [...$('moodRow').children].forEach((c, i) => c.classList.toggle('on', MOODS[i].k === pickedMood));
+    if ($('dreamInput').value.trim()) renderDream(); };
+  return b;
+}));
+
+// 可识别梦境索引
+$('dreamIndex').replaceChildren(...DREAMS.map(d => {
+  const c = el('span', 'chip idx-chip', d.name);
+  c.onclick = () => { $('dreamInput').value = '梦见' + d.keys[0]; renderDream(); $('dreamInput').scrollIntoView({ behavior: 'smooth' }); };
+  return c;
+}));
+
+// ======================= 梦境日记（登录后同步到 Supabase，否则存本机） =======================
+const SUPABASE_URL = 'https://ixvmnsnwdpoensmgrrml.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_emL2WVom3rmr3BgNtIIUpg_pzdvExez'; // 公开密钥，数据由 RLS 权限保护
+let sb = null, sbUser = null;
+try { if (window.supabase && window.supabase.createClient) sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch (e) { sb = null; }
+
+const DIARY_KEY = 'dreamDiary';
+const loadLocal = () => { try { return JSON.parse(localStorage.getItem(DIARY_KEY) || '[]'); } catch (e) { return []; } };
+const saveLocal = list => { try { localStorage.setItem(DIARY_KEY, JSON.stringify(list.slice(0, 50))); return true; } catch (e) { return false; } };
+
+async function listDreams() {
+  if (sb && sbUser) {
+    const { data, error } = await sb.from('dreams').select('id, dream_date, text, mood, level').order('created_at', { ascending: false }).limit(100);
+    if (error) throw error;
+    return data.map(d => ({ id: d.id, date: d.dream_date, text: d.text, mood: d.mood, level: d.level }));
+  }
+  return loadLocal();
+}
+async function addDream(item) {
+  if (sb && sbUser) {
+    const { error } = await sb.from('dreams').insert({ dream_date: item.date, text: item.text, mood: item.mood, level: item.level });
+    if (error) throw error;
+    return true;
+  }
+  const l = loadLocal(); l.unshift(item); return saveLocal(l);
+}
+async function deleteDream(item, idx) {
+  if (sb && sbUser) {
+    const { error } = await sb.from('dreams').delete().eq('id', item.id);
+    if (error) throw error;
+    return;
+  }
+  const l = loadLocal(); l.splice(idx, 1); saveLocal(l);
+}
+
+let pendingDelete = null;
+async function renderDiary() {
+  let list;
+  try { list = await listDreams(); }
+  catch (e) { $('diary').replaceChildren(el('div', 'empty', '读取日记失败，请检查网络后刷新页面。')); return; }
+  if (!list.length) {
+    $('diary').replaceChildren(el('div', 'empty', sbUser ? '还没有记录。解梦后点「存入梦境日记」即可保存，手机和电脑都看得到。'
+                                                        : '还没有记录。解梦后点「存入梦境日记」即可保存在这台设备。'));
+    return;
+  }
+  $('diary').replaceChildren(...list.map((it, idx) => {
+    const row = el('div', 'diary-item');
+    const key = it.id || 'local-' + idx;
+    const x = el('button', 'x', pendingDelete === key ? '确定删除？' : '✕'); x.title = '删除';
+    if (pendingDelete === key) { x.style.color = 'var(--bad)'; x.style.fontSize = '13px'; }
+    x.onclick = async e => {
+      e.stopPropagation();
+      if (pendingDelete !== key) { pendingDelete = key; renderDiary(); return; }
+      pendingDelete = null;
+      try { await deleteDream(it, idx); } catch (err) { $('acctMsg').textContent = '删除失败：' + err.message; }
+      renderDiary();
+    };
+    row.append(el('span', 'd', it.date), el('span', 't', `【${it.level}】${it.text}`), x);
+    row.onclick = () => { $('dreamInput').value = it.text; pickedMood = it.mood || null;
+      [...$('moodRow').children].forEach((c, i) => c.classList.toggle('on', MOODS[i].k === pickedMood));
+      renderDream(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    return row;
+  }));
+}
+
+$('dreamSave').onclick = async () => {
+  const text = $('dreamInput').value.trim();
+  if (!text) return;
+  const r = interpretDream(text);
+  const item = { date: new Date().toLocaleDateString('zh-CN'), text, mood: pickedMood, level: r.level.level };
+  try {
+    const ok = await addDream(item);
+    $('micHint').textContent = ok === false ? '这个浏览器不允许保存，日记无法存储。'
+      : sbUser ? '已存入梦境日记，并同步到你的账号 ✓' : '已存入梦境日记（这台设备）✓';
+  } catch (e) { $('micHint').textContent = '保存失败：' + e.message; }
+  renderDiary(); renderDream();
+};
+
+// —— 账号 ——
+function renderAccount() {
+  $('acctOut').hidden = !!sbUser;
+  $('acctIn').hidden = !sbUser;
+  if (!sb) { $('acctOut').hidden = true; $('acctMsg').textContent = '当前环境无法连接同步服务，日记只保存在这台设备。'; return; }
+  if (sbUser) {
+    $('acctName').textContent = '已登录：' + sbUser.email;
+    const n = loadLocal().length;
+    $('uploadLocalBtn').hidden = !n;
+    $('uploadLocalBtn').textContent = `把这台设备上的 ${n} 条日记上传到账号`;
+  }
+}
+$('loginBtn').onclick = async () => {
+  const email = $('emailInput').value.trim();
+  if (!/^\S+@\S+\.\S+$/.test(email)) { $('acctMsg').textContent = '请输入正确的邮箱地址。'; return; }
+  $('loginBtn').disabled = true;
+  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + location.pathname } });
+  $('loginBtn').disabled = false;
+  $('acctMsg').textContent = error ? '发送失败：' + error.message + '（太频繁的话请过一会儿再试）'
+    : '登录链接已发到 ' + email + '，请在这台设备上打开邮件并点击链接。';
+};
+$('logoutBtn').onclick = async () => { await sb.auth.signOut(); };
+$('uploadLocalBtn').onclick = async () => {
+  const local = loadLocal();
+  const rows = local.map(it => ({ dream_date: it.date, text: it.text, mood: it.mood, level: it.level }));
+  const { error } = await sb.from('dreams').insert(rows);
+  if (error) { $('acctMsg').textContent = '上传失败：' + error.message; return; }
+  saveLocal([]);
+  $('acctMsg').textContent = `已上传 ${rows.length} 条日记 ✓`;
+  renderAccount(); renderDiary();
+};
+if (sb) {
+  sb.auth.onAuthStateChange((_event, session) => {
+    sbUser = session ? session.user : null;
+    if (sbUser) $('acctMsg').textContent = '';
+    renderAccount(); renderDiary();
+  });
+}
+renderAccount();
+
+$('dreamBtn').onclick = renderDream;
+$('dreamClear').onclick = () => { $('dreamInput').value = ''; pickedMood = null;
+  [...$('moodRow').children].forEach(c => c.classList.remove('on')); renderDream(); };
+
+// 语音输入
+let inFrame = false;
+try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }
+const SR = inFrame ? null : (window.SpeechRecognition || window.webkitSpeechRecognition);
+let rec = null, recBase = '';
+if (!SR) {
+  $('micBtn').hidden = true;
+  $('micHint').textContent = '想用说的？点一下输入框，再按键盘上的 🎤 麦克风键（iPhone 键盘右下角 / 搜狗、微信输入法的语音键）就能语音输入。';
+}
+$('micBtn').onclick = () => {
+  if (!SR) return;
+  if (rec) { rec.stop(); return; }
+  rec = new SR();
+  rec.lang = 'zh-CN'; rec.interimResults = true; rec.continuous = true;
+  recBase = $('dreamInput').value;
+  rec.onresult = e => {
+    let s = '';
+    for (let i = 0; i < e.results.length; i++) s += e.results[i][0].transcript;
+    $('dreamInput').value = recBase + s;
+  };
+  rec.onerror = e => {
+    $('micHint').textContent = e.error === 'not-allowed' ? '没有麦克风权限，请在浏览器地址栏允许使用麦克风。'
+      : e.error === 'network' ? '语音识别需要联网，请检查网络；或改用输入法的语音键。'
+      : '语音识别出错：' + e.error + '。可改用输入法的语音键。';
+  };
+  rec.onend = () => { rec = null; $('micBtn').classList.remove('rec'); $('micBtn').textContent = '🎤 语音输入';
+    if ($('dreamInput').value.trim()) renderDream(); };
+  rec.start();
+  $('micBtn').classList.add('rec'); $('micBtn').textContent = '⏹ 停止录音';
+  $('micHint').textContent = '正在听……说完点「停止录音」。';
+};
+
+// 主页签切换
+$('mainTabs').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('mainTabs').children].forEach(x => x.classList.toggle('on', x === b));
+  $('numView').hidden = b.dataset.view !== 'numView';
+  $('dreamView').hidden = b.dataset.view !== 'dreamView';
+  try { localStorage.setItem('luckView', b.dataset.view); } catch (err) {}
+});
+try { if (localStorage.getItem('luckView') === 'dreamView') $('mainTabs').children[1].click(); } catch (e) {}
+renderDiary();
+</script>
+</body>
+</html>
